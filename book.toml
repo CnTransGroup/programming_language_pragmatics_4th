@@ -1,0 +1,11 @@
+[book]
+authors = ["David"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Programming Language Pragmatics Fourth Edition"
+
+[output.html]
+mathjax-support = true
+no-section-label = true
+

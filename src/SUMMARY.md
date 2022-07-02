@@ -7,7 +7,7 @@
   - [Chapter 3: Names, Scopes, and Bindings](./3.names_scopes_bindings.md)
   - [Chapter 4: Semantic Analysis](./4.semantic_analysis.md)
   - [Chapter 5: Target Machine Architecture](./5.target_machine_architecture.md)
-- [Part II: Core Issues in Language Desing](./part2.core_issues_in_language_design.md)
+- [Part II: Core Issues in Language Design](./part2.core_issues_in_language_design.md)
   - [Chapter 6: Control Flow](./6.control_flow.md)
   - [Chapter 7: Type Systems](./7.type_systems.md)
   - [Chapter 8: Composite Types](./8.composite_types.md)

@@ -1,5 +1,6 @@
 # Summary
 
+- [Foreword](./foreward.md)
 - [Part I: Foundations](./part1.foundations.md)
   - [Chapter 1: Introduction](./1.introduction.md)
   - [Chapter 2: Programming Language Syntax](./2.programming_language_syntax.md)

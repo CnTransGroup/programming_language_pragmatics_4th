@@ -3,6 +3,8 @@
 - [Foreword](./foreward.md)
 - [Part I: Foundations](./part1.foundations.md)
   - [Chapter 1: Introduction](./1.introduction.md)
+    - [1.1 The Art of Language Design](./1.1.the_art_of_language_design.md)
+    - [1.2 The Programming Language Spectrum](./1.2.the_programming_language_spectrum.md)
   - [Chapter 2: Programming Language Syntax](./2.programming_language_syntax.md)
   - [Chapter 3: Names, Scopes, and Bindings](./3.names_scopes_bindings.md)
   - [Chapter 4: Semantic Analysis](./4.semantic_analysis.md)

@@ -1,9 +1,9 @@
 [book]
 authors = ["David"]
-language = "en"
+language = "zh"
 multilingual = false
 src = "src"
-title = "Programming Language Pragmatics Fourth Edition"
+title = "编程语言语用论（第4版）"
 
 [output.html]
 mathjax-support = true

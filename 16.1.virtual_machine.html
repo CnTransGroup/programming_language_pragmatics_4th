@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>1.1 The Art of Language Design - 编程语言语用论（第4版）</title>
+        <title>16.1 Virtual Machine - 编程语言语用论（第4版）</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -77,7 +77,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="foreward.html">Foreword</a></li><li class="chapter-item expanded "><a href="part1.foundations.html">Part I: Foundations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.introduction.html">Chapter 1: Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.1.the_art_of_language_design.html" class="active">1.1 The Art of Language Design</a></li><li class="chapter-item expanded "><a href="1.2.the_programming_language_spectrum.html">1.2 The Programming Language Spectrum</a></li><li class="chapter-item expanded "><a href="1.3.why_study_programming_language.html">1.3 Why Study Programming Languages?</a></li></ol></li><li class="chapter-item expanded "><a href="2.programming_language_syntax.html">Chapter 2: Programming Language Syntax</a></li><li class="chapter-item expanded "><a href="3.names_scopes_bindings.html">Chapter 3: Names, Scopes, and Bindings</a></li><li class="chapter-item expanded "><a href="4.semantic_analysis.html">Chapter 4: Semantic Analysis</a></li><li class="chapter-item expanded "><a href="5.target_machine_architecture.html">Chapter 5: Target Machine Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="part2.core_issues_in_language_design.html">Part II: Core Issues in Language Design</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="6.control_flow.html">Chapter 6: Control Flow</a></li><li class="chapter-item expanded "><a href="7.type_systems.html">Chapter 7: Type Systems</a></li><li class="chapter-item expanded "><a href="8.composite_types.html">Chapter 8: Composite Types</a></li><li class="chapter-item expanded "><a href="9.subroutines_and_control_abstraction.html">Chapter 9: Subroutines and Control Abstraction</a></li><li class="chapter-item expanded "><a href="10.data_abstraction_and_object_orientation.html">Chapter 10: Data Abstraction and Object Orientation</a></li></ol></li><li class="chapter-item expanded "><a href="part3.alternative_programming_models.html">Part III: Alternative Programming Models</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11.functional_languages.html">Chapter 11: Functional Languages</a></li><li class="chapter-item expanded "><a href="12.logic_languages.html">Chapter 12: Logic Languages</a></li><li class="chapter-item expanded "><a href="13.concurrency.html">Chapter 13: Concurrency</a></li><li class="chapter-item expanded "><a href="14.scripting_languages.html">Chapter 14: Scripting Languages</a></li></ol></li><li class="chapter-item expanded "><a href="part4.closer_look_at_implementation.html">Part IV: A Closer Look at Implementation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15.building_a_runnable_program.html">Chapter 15: Building a Runnalble Program</a></li><li class="chapter-item expanded "><a href="16.run-time_program_management.html">Chapter 16: Run-Time Program Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="16.1.virtual_machine.html">16.1 Virtual Machine</a></li><li class="chapter-item expanded "><a href="16.2.late_binding_of_machine_code.html">16.2 Late Binding of Machine Code</a></li><li class="chapter-item expanded "><a href="16.3.inspection_or_introspection.html">16.3 Inspection/Introspection</a></li></ol></li><li class="chapter-item expanded "><a href="17.code_improvement.html">Chapter 17: Code Improvement</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="foreward.html">Foreword</a></li><li class="chapter-item expanded "><a href="part1.foundations.html">Part I: Foundations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.introduction.html">Chapter 1: Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.1.the_art_of_language_design.html">1.1 The Art of Language Design</a></li><li class="chapter-item expanded "><a href="1.2.the_programming_language_spectrum.html">1.2 The Programming Language Spectrum</a></li><li class="chapter-item expanded "><a href="1.3.why_study_programming_language.html">1.3 Why Study Programming Languages?</a></li></ol></li><li class="chapter-item expanded "><a href="2.programming_language_syntax.html">Chapter 2: Programming Language Syntax</a></li><li class="chapter-item expanded "><a href="3.names_scopes_bindings.html">Chapter 3: Names, Scopes, and Bindings</a></li><li class="chapter-item expanded "><a href="4.semantic_analysis.html">Chapter 4: Semantic Analysis</a></li><li class="chapter-item expanded "><a href="5.target_machine_architecture.html">Chapter 5: Target Machine Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="part2.core_issues_in_language_design.html">Part II: Core Issues in Language Design</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="6.control_flow.html">Chapter 6: Control Flow</a></li><li class="chapter-item expanded "><a href="7.type_systems.html">Chapter 7: Type Systems</a></li><li class="chapter-item expanded "><a href="8.composite_types.html">Chapter 8: Composite Types</a></li><li class="chapter-item expanded "><a href="9.subroutines_and_control_abstraction.html">Chapter 9: Subroutines and Control Abstraction</a></li><li class="chapter-item expanded "><a href="10.data_abstraction_and_object_orientation.html">Chapter 10: Data Abstraction and Object Orientation</a></li></ol></li><li class="chapter-item expanded "><a href="part3.alternative_programming_models.html">Part III: Alternative Programming Models</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11.functional_languages.html">Chapter 11: Functional Languages</a></li><li class="chapter-item expanded "><a href="12.logic_languages.html">Chapter 12: Logic Languages</a></li><li class="chapter-item expanded "><a href="13.concurrency.html">Chapter 13: Concurrency</a></li><li class="chapter-item expanded "><a href="14.scripting_languages.html">Chapter 14: Scripting Languages</a></li></ol></li><li class="chapter-item expanded "><a href="part4.closer_look_at_implementation.html">Part IV: A Closer Look at Implementation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15.building_a_runnable_program.html">Chapter 15: Building a Runnalble Program</a></li><li class="chapter-item expanded "><a href="16.run-time_program_management.html">Chapter 16: Run-Time Program Management</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="16.1.virtual_machine.html" class="active">16.1 Virtual Machine</a></li><li class="chapter-item expanded "><a href="16.2.late_binding_of_machine_code.html">16.2 Late Binding of Machine Code</a></li><li class="chapter-item expanded "><a href="16.3.inspection_or_introspection.html">16.3 Inspection/Introspection</a></li></ol></li><li class="chapter-item expanded "><a href="17.code_improvement.html">Chapter 17: Code Improvement</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -136,31 +136,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="语言设计的现状"><a class="header" href="#语言设计的现状">语言设计的现状</a></h2>
-<p>今天有成千上百种编程语言，而且新语言还在不断被发明。为什么需要这么多？有几个可能的回答：</p>
+                        <h2 id="虚拟机"><a class="header" href="#虚拟机">虚拟机</a></h2>
+<blockquote>
+<p>语言实现角度很多 runtime 系统有意思的话题已经在之前的章节提到了，为了开展虚拟机的阐述，这里回顾一下</p>
 <ul>
-<li>Evolution</li>
-<li>Special Purposes</li>
-<li>Personal Preference</li>
-<li>Expressive Power</li>
-<li>Ease of Use for the Novice</li>
-<li>Ease of Implementation</li>
-<li>Standardization</li>
-<li>Open Source</li>
-<li>Excellent Compilers（优秀的编译器）。Fortran 的成功归功于优秀的编译器。在某种程度上这是历史问题。Fortran 已经存在了太久，公司已经花费了太多的时间和金钱使得编译器生成性能很高的代码。但是这也是语言设计的问题，在90年代之前 Fortran 没有递归和指针，这些功能会影响代码生成（起码对于不需要这些功能的程序）。同样某些语言，比如 Lisp 的成功，部分原因就是它们具有编译器以及具有帮助编程人员管理大型程序的工具。</li>
-<li>Economics, Patronage, and Inertia（经济学，资助和惯性）。最后，除了技术有点之外，其他因素极大影响了成功。强大的赞助商就是一个因素。PL/I 首先归功于 IBM，Cobol 和 Ada 归功于美国国防部，C# 归功于微软。近些年，Object-C 作为 iPhone 和 iPad 的官方语言也越来越流行。生命周期的另一环在于，即使有了更好的替代品，但是已经有了太多的遗留设施，替换的成本太高，比如世界金融基础设施还有很多 Cobol 发挥着作用。</li>
+<li>垃圾收集（8.3）。章节介绍所述，跟踪垃圾收集器必须发现程序中所有的根结点，确定引用的类型以及每个分配块。compacting 收集器必须能够修改程序的指针。generatinoal 收集器必须可以访问引用的主程序通过写屏障建立的新老指针。像 Java 的收集器必须可以正确的调用 finalize 方法。在支持并发或者增量的收集器实现中，主处理程序和收集器必须就某种锁定协议达成共识，以保持堆的一致性。</li>
+<li>参数变量的数量（9.3.3）。有些语言允许开发人员声明不定数量的参数。在 C 中，<code>va_arg(my_args, arg_type)</code> 的调用必须返回列表 <code>my_args</code> 中的下一项。为了找到下一项，<code>va_arg</code> 必须知道哪个参数被传递到了哪个寄存器，哪个参数被传递到了栈上（以及对齐，padding和offset信息）。如果<code>va_arg</code>的代码是内嵌生成的，compiler 必须知道所有信息。如果代码在库 routines 中，routines 必须是 compiler-specific，因此需要一个小型 runtime 系统。</li>
+<li>异常处理（9.4）。异常传导要求我们 unwind 栈当控制流要脱离当前 subroutine。compiler 可以通过逐帧展开当前栈。另外，一个通用的用来展开栈信息的 rontine 通常也是 runtime 系统提供。同样的，可以通过 compiler 生成的代码来找到该程序中给定点最接近的异常处理，或者通过通用的 runtime 检查程序编译时生成的 pc 处理表。后一种方法可以避免 runtime 进入离开受保护区开销（try block）</li>
+<li>事件处理（9.6）。事件通常在单线程程序调用 subroutine，或者在并发程序中单独线程的 callback。依赖实现策略，它们可能要利用 compiler 调用 subroutine 的约定。也需要在主程序和事件处理之间进行同步，来保护共享数据结构的一致性。一个真正的异步调用--可能发生在主程序的任何时间的任何地方--可能需要保存整个寄存器的状态。只能发生在“安全点”的调用只需要存储很少的状态。不管哪种情况，对于不在词法嵌套最外层的 handler 的调用需要解释成为了闭包来建立正确的执行环境。</li>
+<li>coroutine 和线程实现（9.5 和 13.2.4）。创建协程或者线程的代码必须分配并初始化栈，建立执行环境，执行处理未来异常所需的设置，并调用制定的 routine。像是 transfer, yield, reschedule, sleep_on （以及任何基于调度程序的同步机制）这些 routine也必须同样知道并发实现的大量细节。</li>
+<li>远程过程调用（C-13.5.4）。远程过程调用（RPC）合并了事件和线程的概念：从服务器的角度，一次 RPC 是由单独线程响应客户端发起的一个事件。无论内建到语言中或者由 compiler stub，都需要知道调用约定，并发，和存储管理的 runtime 系统（分发）。</li>
+<li>事务内存（13.4.4）。实现事务内存的软件必须缓存更新和读取，判断是否与其他事务存在冲突，并在执行任何可能造成不一致的操作前确认内存状态。还必须可以回滚一次事务的更新操作，或者提交完整事务。这些操作通常需要在事务开始和结束调用库，然后在中间执行读写操作。除此之外，这些调用还需要理解内存的对象形式，对象和事务的 metadata，以及事务冲突的仲裁策略。</li>
+<li>动态链接（C-15.7）。任何分离编译的系统，compiler 生成 linker 需要的符号表信息用来找到外部引用。在全动态链接系统中国呢，外部引用会暂时在 linker 中以指针方式存在，必须有一个 runtime 系统。当程序试图调用一个没有链接的 routine 时，会唤起 linker，动态找到引用。具体而言，linker 查找符号表，然后以该语言约定的方式发起调用。</li>
 </ul>
-<p>清楚的看到没有单一因素决定一门语言是不是够好。同样在学习语言的过程中，我们也要从几个角度来考虑问题。尤其是，我们应该考虑程序员和语言实现者的观点。有时候这些观点比较统一的，比如对于执行速度的追求。然而，通常情况下存在冲突和权衡，比如新功能的实现和成本之间的权衡。功能的实现提升的成本不只是使用这个功能的程序，还有不使用这种功能的程序。</p>
-<p>在早期，实现语言者的观点是主要的。编程语言演变为告诉计算机怎么做的一种手段。对于开发者，语言更像是表达算法的一种手段。就像自然语言约束了观点的表达与论述，编程语言也约束了容易和不容易表达的内容，同时也对程序员的想法具有深远微妙的影响。Donald Knuth 将编程视作一种告诉其他人计算机如何工作的艺术。这个定义也许是最好的，它承认概念的清晰和实现效率都是基本问题。本书试图抓住折中的精神，考虑每个主题的概念和实现两方面内容。</p>
+</blockquote>
+<p>TL;</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="1.introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="16.run-time_program_management.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="1.2.the_programming_language_spectrum.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="16.2.late_binding_of_machine_code.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -169,10 +168,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="1.introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="16.run-time_program_management.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="1.2.the_programming_language_spectrum.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="16.2.late_binding_of_machine_code.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

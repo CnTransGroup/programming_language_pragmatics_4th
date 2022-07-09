@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>1.2 The Programming Language Spectrum - 编程语言语用论（第4版）</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="foreward.html">Foreword</a></li><li class="chapter-item expanded "><a href="part1.foundations.html">Part I: Foundations</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.introduction.html">Chapter 1: Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="1.1.the_art_of_language_design.html">1.1 The Art of Language Design</a></li><li class="chapter-item expanded "><a href="1.2.the_programming_language_spectrum.html" class="active">1.2 The Programming Language Spectrum</a></li></ol></li><li class="chapter-item expanded "><a href="2.programming_language_syntax.html">Chapter 2: Programming Language Syntax</a></li><li class="chapter-item expanded "><a href="3.names_scopes_bindings.html">Chapter 3: Names, Scopes, and Bindings</a></li><li class="chapter-item expanded "><a href="4.semantic_analysis.html">Chapter 4: Semantic Analysis</a></li><li class="chapter-item expanded "><a href="5.target_machine_architecture.html">Chapter 5: Target Machine Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="part2.core_issues_in_language_design.html">Part II: Core Issues in Language Design</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="6.control_flow.html">Chapter 6: Control Flow</a></li><li class="chapter-item expanded "><a href="7.type_systems.html">Chapter 7: Type Systems</a></li><li class="chapter-item expanded "><a href="8.composite_types.html">Chapter 8: Composite Types</a></li><li class="chapter-item expanded "><a href="9.subroutines_and_control_abstraction.html">Chapter 9: Subroutines and Control Abstraction</a></li><li class="chapter-item expanded "><a href="10.data_abstraction_and_object_orientation.html">Chapter 10: Data Abstraction and Object Orientation</a></li></ol></li><li class="chapter-item expanded "><a href="part3.alternative_programming_models.html">Part III: Alternative Programming Models</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11.functional_languages.html">Chapter 11: Functional Languages</a></li><li class="chapter-item expanded "><a href="12.logic_languages.html">Chapter 12: Logic Languages</a></li><li class="chapter-item expanded "><a href="13.concurrency.html">Chapter 13: Concurrency</a></li><li class="chapter-item expanded "><a href="14.scripting_languages.html">Chapter 14: Scripting Languages</a></li></ol></li><li class="chapter-item expanded "><a href="part4.closer_look_at_implementation.html">Part IV: A Closer Look at Implementation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15.building_a_runnable_program.html">Chapter 15: Building a Runnalble Program</a></li><li class="chapter-item expanded "><a href="16.run-time_program_management.html">Chapter 16: Run-Time Program Management</a></li><li class="chapter-item expanded "><a href="17.code_improvement.html">Chapter 17: Code Improvement</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">编程语言语用论（第4版）</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="编程语言范围"><a class="header" href="#编程语言范围">编程语言范围</a></h2>
+<p>很多现存的语言可以根据计算模型分类。下图展示了一些公共的家族。第一级按照声明式还是命令式分开，声明式表示计算机做什么，命令式表示计算机如何做。</p>
+<p><img src="assets/1.2.the_programming_language_spectrum/image-20220709101621852.png" alt="image-20220709101621852" /></p>
+<p>声明式语言某种程度上来说是“更高级别”的语言；它们更符合程序员的观点，而不是实现者观点。但是出于性能问题，命令式语言才是主流。在避免“无关”的实现细节的愿望与尽可能控制算法细节之间声明式语言可以保持张力。毕竟计算机科学的大部分内容是高效算法的设计。我们实际并不清楚对于什么内容，什么问题范围，对于 compiler 需要在高层次问题抽象上发现良好算法。对于 compiler 不能发挥最用的问题领域，开发者需要定制一个。</p>
+<p>在声明和命令式家族之下，还有一些子家族：</p>
+<ul>
+<li>函数式语言采用机遇函数递归定义的计算模型。由 1930 年代的 lambda calculus 演算启发。程序本质上被视作映射输入到输出的函数，这个函数是通过过程定义。本类别的语言有 Lisp, ML, Haskell.</li>
+<li>数据流语言计算模型是信息在处理节点的信息流动。天然就是并行的：节点被输入触发，然后并行执行。Id Val 是数据流语言。Sisal 是 Val 的后继者，更多的被看作函数式语言。</li>
+<li>Logic or constraint-based 语言从谓词中得到灵感。计算模型是通过目标定向的逻辑规则列表来查找满足某些关系的值。Prolog 是最知名的 logic 语言。这个术语有时候也用于 SQL 数据库语言，XSLT 脚本语言，Excel 编程语言。</li>
+<li>von Neumann 语言（冯 诺伊曼语言）可能是最广泛的语言。包括 Fortran， Ada， C 以及所有通过变量修饰的语言。不同于函数式语言基于 expressions ，冯诺伊曼语言基于 statements，通过改变内存的值来影响一系列计算序列。</li>
+<li>面向对象语言来源于 Simula 67.更接近冯诺伊曼语言，但是内存和计算更结构化。并没有将计算看作在处理器上的操作，而是抽象为对象之间的交互，每个对象有自身的内部状态和子例程管理状态。Smalltak 是最纯碎的面向对象的语言；C++ 和 Java 应用最广泛。也可以设计面向对象的函数式语言（最知名的是 CLOS 和 OCaml），但是通常它们具有强烈的命令式味道。</li>
+<li>脚本语言强调“粘合在一起”功能。脚本语言最初因为特定目的被发明出来：csh 和 bash 作为 job control 从 shell； PHP 和 JS 生产动态 web 内容；Lua 用于控制计算机游戏。其他语言，包括Perl，Python，Ruby 更通用。大多数原型开发更偏向开发速度而不是执行速度。</li>
+</ul>
+<p>可能会疑问并发语言为什么没有单独分一个家族（事实上本书有一章专门讨论这个话题），但是并行还是顺序执行跟上面的分类是无关的。大多数并发程序是使用库或 compiler 联合顺序语言比如 Fortran 或 C 编写的。一些广泛应用的语言，比如 Java，C#， Ada 具有显式的并发特性。研究人员正在研究每种语言的并发能力。</p>
+<p>作为语言家族对比的简单例子，考虑 GCD 问题。冯诺伊曼语言，函数式，logic 语言对于这个问题的表达不仅影响了代码表示，还影响了程序猿的思想。冯诺伊曼语言的算法版本完全是命令式：</p>
+<blockquote>
+<p>计算 a 和 b 的 gcd，检查 a 和 b 是否相等。如果相等，打印其中一个，停止。否则选择较大的和差值重复上面的过程。</p>
+</blockquote>
+<p>C 代码如下:</p>
+<pre><code class="language-c">// c code
+int gcd(int a, int b) {
+  while(a != b) {
+    if (a &gt; b) a = a - b;
+    else b = b - a;
+  }
+  return a;
+}
+</code></pre>
+<p>函数式语言，重点是输出到输入的数学关系：</p>
+<blockquote>
+<p>a 和 b 的 gcd 定义为：</p>
+<ol>
+<li>当 a = b ，a</li>
+<li>当 a &gt; b, b 和 a - b 的 gcd</li>
+<li>当 b &gt; a, a 和 b - a 的 gcd</li>
+</ol>
+<p>当计算 gcd 时，扩展这个定义即可</p>
+</blockquote>
+<p>OCaml 版本如下，let 表示定义；rec 表示递归；函数参数在名字和等号之间</p>
+<pre><code class="language-ocaml">* OCaml code *
+let rec gcd a b = 
+	if a = b then a
+	else if a &gt; b then gcd b (a - b)
+	else gcd a (b - 1)
+</code></pre>
+<p>Logic 语言，程序员制定一组公理和证明规则，可以让系统发现结果：</p>
+<blockquote>
+<p>gcd(a,b,g) 的论点是  （1）a,b,g 都相等 （2）a 大于 b，就存在一个 c = a - b 然后 gcd(c,b,g) 为真 ，或者 （3）a 小于 b，就存在 c = b - a 然后 gcd(c, a, g) 为真。为了计算 gcd，搜索 g 满足 gcd(a,b,g) 为真</p>
+</blockquote>
+<p>Prolog 版本的代码如下：</p>
+<pre><code class="language-prolog">% prolog
+gcd(A,B,G) :- A = B, G = A
+gcd(A,B,G) :- A &gt; B, C is A-B, gcd(C,B,G)
+gcd(A,B,G) :- A &lt; B, C is B-A, gcd(C,A,G)
+</code></pre>
+<p>应该强调的是语言家族的区分并不明确。例如冯诺伊曼语言和面向对象语言之间的界限很模糊，而且很多脚本语言也是面向对象的。大多数函数式或者 logic 语言包含命令式特性，最近的一些命令式语言包含了函数式特性。上面的描述是为了抓住家族的共有味道，而不是为了提供正式定义。</p>
+<p>命令式语言--冯诺伊曼和面向对象--是本书的大部分内容。但是有兴趣的读者可以发现本书的大多数章节的替代计算模型问题涉及了跨家族问题。11-14章包含了函数式，logic，并发和脚本语言。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="1.1.the_art_of_language_design.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="2.programming_language_syntax.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="1.1.the_art_of_language_design.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="2.programming_language_syntax.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

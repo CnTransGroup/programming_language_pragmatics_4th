@@ -8,4 +8,12 @@ title = "编程语言语用论（第4版）"
 [output.html]
 mathjax-support = true
 no-section-label = true
+git-repository-url = "https://github.com/CnTransGroup/programming_language_pragmatics_4th"
+git-repository-icon = "fa-github"
 
+[output.html.fold]
+enable = true
+level = 1
+
+[output.html.search]
+enable = true

@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>7.2 Type Checking - 编程语言语用论（第4版）</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="foreward.html">Foreword</a></li><li class="chapter-item expanded "><a href="part1.foundations.html">Part I: Foundations</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="1.introduction.html">Chapter 1: Introduction</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="1.1.the_art_of_language_design.html">1.1 The Art of Language Design</a></li><li class="chapter-item "><a href="1.2.the_programming_language_spectrum.html">1.2 The Programming Language Spectrum</a></li><li class="chapter-item "><a href="1.3.why_study_programming_language.html">1.3 Why Study Programming Languages?</a></li></ol></li><li class="chapter-item "><a href="2.programming_language_syntax.html">Chapter 2: Programming Language Syntax</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="2.1.specifying_syntax.html">2.1 Specifying Syntax: Regular Expressions and Context-Free Grammars</a></li><li class="chapter-item "><a href="2.2.scanning.html">2.2 Scanning</a></li><li class="chapter-item "><a href="2.3.parsing.html">2.3 Parsing</a></li><li class="chapter-item "><a href="2.4.theoretical_foundations.html">2.4 Theoretical Foundations</a></li></ol></li><li class="chapter-item "><a href="3.names_scopes_bindings.html">Chapter 3: Names, Scopes, and Bindings</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="3.1.the_notion_of_binding_time.html">3.1 The Notion of Binding Time</a></li><li class="chapter-item "><a href="3.2.object_lifetimes_and_storage_management.html">3.2 Object Lifetimes and Storage Management</a></li><li class="chapter-item "><a href="3.3.scope_rules.html">3.3 Scope Rules</a></li><li class="chapter-item "><a href="3.4.implementing_scope.html">3.4 Implementing Scope</a></li><li class="chapter-item "><a href="3.5.the_meaning_of_names_within_a_scope.html">3.5 The Meaning of Names within a Scope</a></li><li class="chapter-item "><a href="3.6.the_binding_of_referencing_environments.html">3.6 The Binding of Referencing Environments</a></li><li class="chapter-item "><a href="3.7.macro_expansion.html">3.7 Macro Expansion</a></li><li class="chapter-item "><a href="3.8.separate_compilation.html">3.8 Separate Compilation</a></li></ol></li><li class="chapter-item "><a href="4.semantic_analysis.html">Chapter 4: Semantic Analysis</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="4.1.the_role_of_the_semantic_analyzer.html">4.1 The Role of The Semantic Analyzer</a></li><li class="chapter-item "><a href="4.2.attribute_grammar.html">4.2 Attribute Grammar</a></li><li class="chapter-item "><a href="4.3.evaluating_attributes.html">4.3 Evaluating Attributes</a></li><li class="chapter-item "><a href="4.4.action_routines.html">4.4 Action Routines</a></li><li class="chapter-item "><a href="4.5.space_management_for_attributes.html">4.5 Space Management for Attributes</a></li><li class="chapter-item "><a href="4.6.tree_grammars_and_syntax_tree_decoration.html">4.6 Tree Grammars and Syntax Tree Decoration</a></li></ol></li><li class="chapter-item "><a href="5.target_machine_architecture.html">Chapter 5: Target Machine Architecture</a></li></ol></li><li class="chapter-item expanded "><a href="part2.core_issues_in_language_design.html">Part II: Core Issues in Language Design</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="6.control_flow.html">Chapter 6: Control Flow</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="6.1.expression_evaluation.html">6.1 Expression evaluation</a></li><li class="chapter-item "><a href="6.2.structured_and_unstructured_flow.html">6.2 Structured and Unstructured Flow</a></li><li class="chapter-item "><a href="6.3.sequencing.html">6.3 Sequencing</a></li><li class="chapter-item "><a href="6.4.selection.html">6.4 Selection</a></li><li class="chapter-item "><a href="6.5.iteration.html">6.5 Iteration</a></li><li class="chapter-item "><a href="6.6.recursion.html">6.6 Recursion</a></li><li class="chapter-item "><a href="6.7.nondeterminacy.html">6.7 Nondeterminacy</a></li></ol></li><li class="chapter-item expanded "><a href="7.type_systems.html">Chapter 7: Type Systems</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="7.1.overview.html">7.1 Overview</a></li><li class="chapter-item expanded "><a href="7.2.type_checking.html" class="active">7.2 Type Checking</a></li><li class="chapter-item "><a href="7.3.parametric_polymorphism.html">7.3 Parametric Polymorphism</a></li><li class="chapter-item "><a href="7.4.equality_tesing_and_assignment.html">7.4 Equality Tesing and Assignment</a></li></ol></li><li class="chapter-item "><a href="8.composite_types.html">Chapter 8: Composite Types</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="8.1.records_structures.html">8.1 Records(Structures)</a></li><li class="chapter-item "><a href="8.2.arrays.html">8.2 Arrays</a></li><li class="chapter-item "><a href="8.3.strings.html">8.3 Strings</a></li><li class="chapter-item "><a href="8.4.sets.html">8.4 Sets</a></li><li class="chapter-item "><a href="8.5.pointers_and_recursive_types.html">8.5 Pointers and Recursive Types</a></li><li class="chapter-item "><a href="8.6.lists.html">8.6 Lists</a></li><li class="chapter-item "><a href="8.7.files_and_input_output.html">8.7 Files and Input/Output</a></li></ol></li><li class="chapter-item "><a href="9.subroutines_and_control_abstraction.html">Chapter 9: Subroutines and Control Abstraction</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="9.1.review_of_stack_layout.html">9.1 Review of Stack Layout</a></li><li class="chapter-item "><a href="9.2.calling_sequences.html">9.2 Calling Sequences</a></li><li class="chapter-item "><a href="9.4.exception_handling.html">9.3 Parameter Passing</a></li><li class="chapter-item "><a href="9.5.coroutines.html">9.5 Coroutines</a></li><li class="chapter-item "><a href="9.6.events.html">9.6 Events</a></li></ol></li><li class="chapter-item "><a href="10.data_abstraction_and_object_orientation.html">Chapter 10: Data Abstraction and Object Orientation</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="10.1.object_oriented_programming.html">10.1 Object-Oriented Programming</a></li><li class="chapter-item "><a href="10.2.encapsulation_and_inheritance.html">10.2 Encapsulation and Inheritance</a></li><li class="chapter-item "><a href="10.3.initialization_and_finalization.html">10.3 Initialization and Finalization</a></li><li class="chapter-item "><a href="10.4.dynamic_method_binding.html">10.4 Dynamic method Binding</a></li><li class="chapter-item "><a href="10.5.mix_in_inheritance.html">10.5 Mix in Inheritance</a></li><li class="chapter-item "><a href="10.6.true_multiple_inheritance.html">10.6 True Multiple Inheritance</a></li><li class="chapter-item "><a href="10.7.object_oriented_programming_revisited.html">10.7 Object-Oriented Progamming Revisited</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="part3.alternative_programming_models.html">Part III: Alternative Programming Models</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="11.functional_languages.html">Chapter 11: Functional Languages</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="11.1.historical_origins.html">11.1 Historical Origins</a></li><li class="chapter-item "><a href="11.2.functional_programming_concepts.html">11.2 Functional Programming Concepts</a></li><li class="chapter-item "><a href="11.3.a_bit_of_scheme.html">11.3 a Bit of Scheme</a></li><li class="chapter-item "><a href="11.4.a_bit_of_ocaml.html">11.4 a Bit of Ocaml</a></li><li class="chapter-item "><a href="11.5.evaluation_order_revisited.html">11.5 Evaluation Order Revisited</a></li><li class="chapter-item "><a href="11.6.higher_order_functions.html">11.6 Higher Order Functions</a></li><li class="chapter-item "><a href="11.7.theoretical_foundations.html">11.7 Theoretical Foundations</a></li><li class="chapter-item "><a href="11.8.functional_programming_in_perspective.html">11.8 Functional Programming in Perspective</a></li></ol></li><li class="chapter-item "><a href="12.logic_languages.html">Chapter 12: Logic Languages</a></li><li class="chapter-item "><a href="13.concurrency.html">Chapter 13: Concurrency</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="13.1.background_and_motivation.html">13.1 Background and Motivation</a></li><li class="chapter-item "><a href="13.2.concurrent_programming_fundamentals.html">13.2 Concurrent Programming Fundamentals</a></li><li class="chapter-item "><a href="13.3.implementing_synchronization.html">13.3 Implementing Synchronization</a></li><li class="chapter-item "><a href="13.4.language_level_constructs.html">13.4 Language Level Constructs</a></li><li class="chapter-item "><a href="13.5.message_passing.html">13.5 Message Passing</a></li></ol></li><li class="chapter-item "><a href="14.scripting_languages.html">Chapter 14: Scripting Languages</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="14.1.what_is_a_scripting_language.html">14.1 What is a Scripting Language</a></li><li class="chapter-item "><a href="14.2.problem_domains.html">14.2 Problem Domains</a></li><li class="chapter-item "><a href="14.3.scriping_the_world_wide_web.html">14.3 Scripting the World Wide Web</a></li><li class="chapter-item "><a href="14.4.innovative_features.html">14.4 Innovative Features</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="part4.closer_look_at_implementation.html">Part IV: A Closer Look at Implementation</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="15.building_a_runnable_program.html">Chapter 15: Building a Runnalble Program</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="15.1.back_end_compiler_structure.html">15.1 Back-end Compiler Structure</a></li><li class="chapter-item "><a href="15.2.intermediate_forms.html">15.2 Intermediate Forms</a></li><li class="chapter-item "><a href="15.3.code_generation.html">15.3 Code Generation</a></li><li class="chapter-item "><a href="15.4.address_space_organization.html">15.4 Address Space Organization</a></li><li class="chapter-item "><a href="15.5.assembly.html">15.5 Assembly</a></li><li class="chapter-item "><a href="15.6.linking.html">15.6 Linking</a></li><li class="chapter-item "><a href="15.7.dynamic_linking.html">15.7 Dynamic Linking</a></li></ol></li><li class="chapter-item "><a href="16.run-time_program_management.html">Chapter 16: Run-Time Program Management</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="16.1.virtual_machine.html">16.1 Virtual Machine</a></li><li class="chapter-item "><a href="16.2.late_binding_of_machine_code.html">16.2 Late Binding of Machine Code</a></li><li class="chapter-item "><a href="16.3.inspection_or_introspection.html">16.3 Inspection/Introspection</a></li></ol></li><li class="chapter-item "><a href="17.code_improvement.html">Chapter 17: Code Improvement</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">编程语言语用论（第4版）</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/CnTransGroup/programming_language_pragmatics_4th" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="7.1.overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="7.3.parametric_polymorphism.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="7.1.overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="7.3.parametric_polymorphism.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

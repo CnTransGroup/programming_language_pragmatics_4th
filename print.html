@@ -314,7 +314,7 @@ op -&gt; +
 <p>正如有很多不同的编程语言一样，也有很多种机器语言，尽管机器语言的多样性要少很多。每种机器语言对应不同的处理器架构。正式来说，架构就是硬件与软件的接口，即编译器生成的或者程序员为裸机手写的语言。处理器的实现是架构在硬件的实现。为了生成正确的代码，编译器作者只需要理解目标架构。为了生成高效的代码，还要了解实现，因为这决定了生成代码的执行速度。</p>
 <hr />
 <p>网站有更详细的介绍，比如 x86 的 CSIC 指令集，以及 ARM 的 RISC 指令集。</p>
-<p>更详细的请看[chapter5](../assets/Scott 4e_Chapter 05.pdf)</p>
+<p>更详细的请看<a href="../assets/chapter_05.pdf">chapter5</a></p>
 <div style="break-before: page; page-break-before: always;"></div><p>在第一部分的基础上，我们现在来讨论大多数编程语言核心的问题：控制流，数据类型，以及控制和数据的抽象。</p>
 <p>第6章讨论控制流，包括 expression evaluation, sequencing, selection, iteration, and recursion. 很多时候我们看到设计决策反映了对于互补或者竞争策略概念和效率上的权衡。引用和值的区别，提前或者懒惰计算问题会在后续章节反复出现。</p>
 <p>接下来两章讨论类型。第7章包括类型系统和类型检查，包括等效性，兼容性和类型推断等概念。还讨论了显式和隐式形式的参数多态。第8章介绍了 compsite type 的最新研究，包括 records, variants, arrays, strings, sets, pointers, lists, files。指针部分介绍了垃圾收集技术。</p>
@@ -334,7 +334,38 @@ op -&gt; +
 <p>尽管句法和语法细节语言之间大有不同，但这些类别的顺序控制结构可以在大多数语言中发现。一个程序猿如果从这些类别来学习新语言，评估语言之间设计的权衡，算法的选择，而不是陷入到语言的语法细节中会更容易。</p>
 <p>Subroutines 是第9章的内容，并发是第 13 章的内容。异常处理在 9.4 和 13.4.4 中会分别讨论。本章会讨论剩下的几种类别。在 6.1 我们来讨论表达式的求值（expression）-- 所有高级顺序的基础表达块。来讨论 expression 的句法表示，操作符的优先级和关联性，操作数的执行顺序以及赋值的语法。尤其需要关注的是关联值的变量和关联引用的变量之间的区别。在 6.2 我们讨论结构化和非结构化（goto）的控制流程。</p>
 <p>不同类别的控制流在不同语言中的重要性差别很大。sequencing 是命令式语言（冯诺依曼，面向对象语言）的核心，但是在函数式语言中的角色就小一些，函数式语言强调 evaluation of expression，否定或者消除影响程序输出的 statements。类似的，函数式语言大量使用递归，命令式语言更喜欢迭代。逻辑语言倾向于消除或者隐藏顺序控制：开发者描述推理规则，语言实现负责找到应用这些规则的顺序。</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>正如我们在第一章中指出，传统上，编程语言是不完美分为了命令家族和生命家族的。是时候聊聊第一部分和第二部分提到的每个家族的重要问题了。此外我们涵盖的主题还包括，句法，语义，命名，类型，抽象。前面我们太多集中于主流命令语言上，第三部分让我们偏离一下。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>在第 3 章我们描述了数据抽象的多个阶段，重点是 scope 机制下控制名称的可见性。我们从全局变量开始，它的生命周期贯穿程序执行期。然后讨论局部变量，它的生命周期限制在单个 subroutine 执行期间；嵌套 scope，允许 subroutine 自己为局部的；静态变量，它的生命周期也贯穿程序执行期，但是名称仅在单个 subroutine 可见。随后是模块，允许一组 subroutine 共享一组静态变量；模块类型，允许开发者实例化多个给定抽象；类，允许开发者定义一族相关抽象。</p>
+<p>原始的模块鼓励“管理者”风格的编程，模块到处为抽象类型。模块类型和类允许模块自己就是抽象类型。这种区别在两个方面。首先，显示 <code>create</code> <code>destroy</code> 过程需要从管理者模块导出，可以被模块类型实例的创建和销毁代替。其次，模块实例的方法调用代替了将导出类型作为参数传递的过程调用。类就是建立在模块作为类型机制上，然后增加了继承机制，继承允许通过扩展或者修改现有的抽象实现新的抽象，以及动态方法绑定，这可以使得新版本的抽象执行新的行为，或者在上下文中使用早版本的内容。一个类的实例被称为对象，基于类的语言或者编程称为面向对象。</p>
+<p>在第 3 章中对于数据抽象的逐步演化是组织想法的很有用的方法，但是并不能完整反映语言特性的发展。尤其是，对于面向对象编程的发展是基于模块发展的描述是不准确的。相反，面向对象编程的三个基本概念（封装，继承和动态方法绑定）都起源于18世纪60年代中期的 Simula 语言。对于现代的面向对象语言，Simula 在数据封装上显得比较弱，在1970年代 Clu, Modula, Euclid 在这个方面做出了重要贡献。同时，继承和动态方法绑定结合的思想也发生在 1970 年代。</p>
+<p>Smalltalk 采用了独特的“基于消息”的编程模型，具有动态类型和不常见的语法。动态类型使得实现相对较慢，而且延迟了错误报告。该语言还紧密整合到了图形编程环境中，因此很难跨系统移植。由于这些原因，并没有被广泛使用，并对后面的语言产生了影响。比如 Eiffle， C++，Ada 95， Fortran 2003， Java，C# 在很大程度上是 Smalltalk 中继承和动态方法绑定和“主流”命令式语言词法和语法的重新融合。另一条线是，Object-C 结合了 Smalltalk 风格的消息和动态类型，并以相对纯粹的方式结合了 C 的语法进行对象操作。对象的方向在函数式语言中也变得重要起来，比如 Lisp 对象系统，和 OCaml 的对象。</p>
+<p>最近，动态类型对象重新在 Python 和 Ruby 中获得了知名度，同时静态类型对象作为 Object-C 的继任者（跟随 OCmal）也出现在了 Scala ，Go 和 Swift 中，将动态类型对象建立在静态类型语言中。</p>
+<p>在 10.1 中我们概述面向对象编程以及三个主要概念。在 10.2 中讨论数据隐藏和封装的细节。然后在 10.3 中讨论对象初始化和 finalization，以及 10.4 中的动态方法绑定。在 10.6 中（大多数内容在网站上<a href="../assets/supplementary_sections.pdf">这里也有</a>）考虑多重继承。正如我们看到的多重继承引入了一些特别棘手的语法和实现挑战。最后，在10.7中，我们重新审视面向对象的定义，考虑语言应该或者在多大程度上讲所有事物作为对象进行建模。我们大多数讨论集中在 Smalltalk，Eiffel，C++，Java，只会少量提及其他语言。我们在 14.4.4 中会重新回到动态类型对象的讨论。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>面向对象编程可以看作通过已经存在的抽象进行扩展或者改进来重用代码的尝试。首先看一个例子，考虑一个整数集合，通过双向链表来实现。【译者注：这里的代码描述和相关叙述参考原书，翻译比较麻烦，而且很容易看懂】</p>
+<p>关键词：</p>
+<ul>
+<li>Data member(field)</li>
+<li>subroutine member(method)</li>
+<li>public / private members</li>
+<li>Derived Class (child class or subclass) &lt;-&gt; Base class (parent class or superclass)</li>
+<li>modifying base class methods</li>
+</ul>
+<h2 id="1011-classed-and-generics"><a class="header" href="#1011-classed-and-generics">10.1.1 Classed and Generics</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>如同 10.5 描述的，混合继承允许接口指定继承类必须提供的功能，以便在上下文中使用该类的对象。至关重要的是，接口在大多数情况下并不提供功能本身。即使存在默认实现也是为了在派生类中使用。</p>
+<p>有时候从多个基类中继承功能也比较有用。比如，管理计算系统需要追踪每个系统用户的信息，大学给每个学生提供了一个账号。可能 student 派生类继承自 person 和 system_user 两个类。在 C++ 中我们可以这样写：</p>
+<pre><code class="language-cpp">class student: public person, public system_user {...}
+</code></pre>
+<p>现在 student 类有 person 和 system_user 的所有字段和方法。</p>
+<p>多重继承也出现在了多种语言中，包括 CLOS，OCaml，Python。很多老语言，包括 Simula，Smalltalk，Modula-3和 Oberson，只支持单继承。混合继承是一种常见的妥协。</p>
+<hr />
+<p>多重继承也引入了大量语法和实现上的问题，在<a href="../assets/supplementary_sectoins.pdf">这里</a>有更深入的阐述：</p>
+<ul>
+<li>假设有两个父类提供了同名方法，子类使用那个，如何都使用？</li>
+<li>假设两个父类派生自同一个公共爷爷类，孙子类有几份爷爷类的拷贝？</li>
+<li>单继承的实现取决于：父类对象的表示是派生类表的前缀，多重继承中，父类如何通过前缀表示</li>
+</ul>
+<hr />
+<p>多重继承中公共爷爷类问题称为重复继承。重复继承存在多份称为复制继承，重复继承只有一份称为共享继承。Eiffel 默认为共享继承，C++默认为负值继承。两种语言都允许开发者在需要时获取另一个选项。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>正如我们在第一章中指出，传统上，编程语言是不完美分为了命令家族和生命家族的。是时候聊聊第一部分和第二部分提到的每个家族的重要问题了。此外我们涵盖的主题还包括，句法，语义，命名，类型，抽象。前面我们太多集中于主流命令语言上，第三部分让我们偏离一下。</p>
 <p>函数式和逻辑型语言是一个非主流选择。我们在第11章和12章讨论。在每种情况，我们围绕代表性语言进行讨论：Scheme OCaml 是典型的函数式语言，Prolog 是典型的逻辑型语言。在第11章我们好涉及到提前还是懒惰计算，以及函数作为第一公民，高阶函数。在12章我们涉及使全自动化通用逻辑编写困难的问题，并描述了实际使用中模型的限制。两章中可选部分都需要数学基础：Lambda Calculus for functional language, Predicate Calculus for logic programming.</p>
 <p>剩下的两章讨论并发和脚本模型，这两个模型正变得越来越流行，并且是跨范式的。并发是由网络计算机的硬件并行以及多线程处理器和片上多核心驱动的。脚本是由万维网的增长以及开发者对开发效率（开发效率比运行效率更重要）的重视驱动的。</p>
 <p>第13章包括通信，同步，线程创建语法，线程实现。还分开讨论了内存共享模型，线程可以显式或者隐式通过管理同一个值来同步，以及消息通信模型，线程只能通过消息进行同步。</p>
@@ -381,7 +412,7 @@ op -&gt; +
 <div style="break-before: page; page-break-before: always;"></div><p>在第15章中，我们讨论了代码生成，编译器后端的汇编，目标代码的联接。这些技术导致了正确但是没有最佳优化的代码：有很多冗余计算，寄存器，计算单元，现代微处理器缓存不高效的使用。本章介绍代码提升：专门用来生成良好（快速）代码的汇编阶段。如同 1.6.4 所述，代码提升通常被称为 optimization（优化），尽管很少存在绝对意义上的优化。</p>
 <p>我们的研究将考虑简单的 peephole 优化，该优化在很小的指令窗口内“清理”生成的目标代码；local 优化，该优化为单独的代码块生成近乎最佳优化的代码；global 优化，该优化在整个 subroutine 级别进行激进的代码优化。我们不涉及进程间优化；感性起的读者可以参考本书的参考。此外，即使我们涉及的话题，我们更倾向于使得代码提升过程清晰而不是探讨其中的细节。大部分讨论将围绕单个 subroutine 的连续改进。这个扩展的示例允许我们说明几种关键形式的代码改进方法并且不会陷入到具体的细节中。</p>
 <hr />
-<p>更详细的请看[chapter17](../assets/Scott 4e_Chapter 17.pdf)</p>
+<p>更详细的请看<a href="../assets/chapter_17.pdf">chapter17</a></p>
 
                     </main>
 

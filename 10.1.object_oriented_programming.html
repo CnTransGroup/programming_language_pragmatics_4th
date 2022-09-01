@@ -142,13 +142,30 @@
                         <p>面向对象编程可以看作通过已经存在的抽象进行扩展或者改进来重用代码的尝试。首先看一个例子，考虑一个整数集合，通过双向链表来实现。【译者注：这里的代码描述和相关叙述参考原书，翻译比较麻烦，而且很容易看懂】</p>
 <p>关键词：</p>
 <ul>
-<li>Data member(field)</li>
-<li>subroutine member(method)</li>
-<li>public / private members</li>
-<li>Derived Class (child class or subclass) &lt;-&gt; Base class (parent class or superclass)</li>
-<li>modifying base class methods</li>
+<li>
+<p>Data member(field)</p>
+</li>
+<li>
+<p>subroutine member(method)</p>
+</li>
+<li>
+<p>public / private members</p>
+</li>
+<li>
+<p>Derived Class (child class or subclass) &lt;-&gt; Base class (parent class or superclass)</p>
+</li>
+<li>
+<p>modifying base class methods</p>
+</li>
+<li>
+<p>Objects as Fields of Other Objects (组合，非继承)</p>
+<p>think as or is</p>
+</li>
 </ul>
-<h2 id="1011-classed-and-generics"><a class="header" href="#1011-classed-and-generics">10.1.1 Classed and Generics</a></h2>
+<h3 id="1011-classed-and-generics"><a class="header" href="#1011-classed-and-generics">10.1.1 Classed and Generics</a></h3>
+<p>精明的读者可能已经注意到上面的例子中 list 和 queue 其中的元素都是整数。实际上我们可能有很多其他元素的 list 和 queue，代码都很相似。在动态类型语言（Ruby 或者 Python）中，这很自然： val 没有 static 类型，任何类型的对象都可以。</p>
+<p>在 C++ 这种静态类型语言中，需要一种通用的方式来创建不同元素的 list 和 queue。当然，可以通过定义基类，然后派生部分完成这个任务，但是如果基类中需要传入元素就很难完成这个任务。答案当然是 C++ 的模板。允许我们定义 class<T> 这种方式。</p>
+<p>简而言之，模板的存在为了抽象类型无关，有些继承无法完成的目的。除 C++ 外，通用技术还出现在其他静态类型面向对象语言，比如 Eiffel， Java， C# 和 OCaml。</p>
 
                     </main>
 

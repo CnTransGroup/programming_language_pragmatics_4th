@@ -81,6 +81,7 @@
     - [13.3 Implementing Synchronization](./13.3.implementing_synchronization.md)
     - [13.4 Language Level Constructs](./13.4.language_level_constructs.md)
     - [13.5 Message Passing](./13.5.message_passing.md)
+    - [13.6 Summary and Concluding Remarks](./13.6.summary_and_consluding_remarks.md)
   - [Chapter 14: Scripting Languages](./14.scripting_languages.md)
     - [14.1 What is a Scripting Language](./14.1.what_is_a_scripting_language.md)
     - [14.2 Problem Domains](./14.2.problem_domains.md)

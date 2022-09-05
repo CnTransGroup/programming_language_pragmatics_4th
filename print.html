@@ -389,7 +389,151 @@ while (p &lt;&gt; nil) and (p^.key &lt;&gt; val) do
 </code></pre>
 <p>这种写法就不对，因为两个条件都会执行，就会执行 p = nil 的情况。</p>
 <p>但是短路也不总是正面的。比如两个条件 E1 和 E2 都有 side effect， 所以希望同时计算，再判断。有些语言提供了短路和非短路两种选择，比如 Ada 中使用 and / or 表示常规，and then / or else 表示短路。在 C 中，可以使用 &amp;  | 可以作为 &amp;&amp; || 的非短路选择。</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>在第 3 章我们描述了数据抽象的多个阶段，重点是 scope 机制下控制名称的可见性。我们从全局变量开始，它的生命周期贯穿程序执行期。然后讨论局部变量，它的生命周期限制在单个 subroutine 执行期间；嵌套 scope，允许 subroutine 自己为局部的；静态变量，它的生命周期也贯穿程序执行期，但是名称仅在单个 subroutine 可见。随后是模块，允许一组 subroutine 共享一组静态变量；模块类型，允许开发者实例化多个给定抽象；类，允许开发者定义一族相关抽象。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>unconditional jump: statement label and <code>goto</code> </p>
+<p>在1960 年代进行激烈的讨论，最终 goto 被放弃，这也是被称为“结构化编程”软件革命的一部分。结构化编程在 1970 年代流行起来，1990 年代流行面向对象编程。结构化编程强调从上到下设计(渐进式细化)，代码模块化，结构体类型，描述式变量，和不变名称，以及很多注释。结构化编程的开发者可以在 subroutine 中，只使用 <em>顺序，选择，迭代</em> 表达设计良好的命令式算法。不会使用标签，结构化编程依赖嵌套结构的词法边界作为分支控制的目标。</p>
+<p>现代程序员熟悉的很多结构化控制流均由 Algol 60 创建。包括 </p>
+<pre><code class="language-cpp">if ... then ... else ...
+for ... 
+while ...
+case(switch)
+</code></pre>
+<h3 id="621-structured-alternatives-to-goto"><a class="header" href="#621-structured-alternatives-to-goto">6.2.1 Structured Alternatives to goto</a></h3>
+<p>goto 到 subroutine 结尾引入了 return statement</p>
+<p>goto 跳出 loop 引入了 break / exit statement (以及 continue )，有些语言甚至可以从嵌套 subroutine 调用中跳出 exception</p>
+<h4 id="multilevel-returns"><a class="header" href="#multilevel-returns">Multilevel returns</a></h4>
+<p>如果发生 nonlocal goto ，语言就必须提供 repair the run-time stack of subroutine call information, the repair operation 被称为 <strong>unwinding</strong>。</p>
+<p>Common Lisp 引入了 catch/throw 机制，Ruby 中也使用，这个机制需要匹配 catch label</p>
+<h4 id="errors-and-other-excepitons"><a class="header" href="#errors-and-other-excepitons">Errors and Other Excepitons</a></h4>
+<p>多层返回假定调用者知道被调返回什么。但是程序执行异常情况需要被恢复成执行环境。</p>
+<p>最直观但是不让人满意的方式是这种</p>
+<pre><code class="language-cpp">status := my_proc(args);
+if status = ok then ...
+</code></pre>
+<p>辅助布尔值可以使用 nonlocal goto 或者多层返回值代替，但是调用方必须显式处理返回值状态。作为结构化替代，很多现代编程语言提供了 exception handling 机制方便处理这种情况，可以恢复意外情况。我们在 9.4 详细讨论 exception handling。开发者通常要提供异常 handler 来从异常中恢复。</p>
+<p>多层返回和异常处理有很大的相似性。都是一种从嵌套内层跳到外层的机制。不同之处在于，多层返回内部上下文有所有信息，完成计算，如果正确返回正确值，返回到外层上下文不需要后续处理；异常机制相反，内层上下文不会完成所有工作，执行正常处理，然后抛出异常到外层上下文。</p>
+<p>Common Lisp 和 Ruby 都支持，这很少见。大多数语言只支持异常机制；开发者需要自己编写程序处理多层返回。不幸的是，Common Lisp 和 Ruby 使用了 catch/throw 关键字来支持多层返回，而大多数语言使用这两个关键字来支持异常机制。</p>
+<h3 id="622-continuations"><a class="header" href="#622-continuations">6.2.2 Continuations</a></h3>
+<p>The notion of nonlocal gotos that unwind the stack can be generalized by defining what are known as continuations. In low-level terms, a continuation consists of a code address, a referencing environment that should be established (or restored) when jumping to that address, and a reference to another continuation that represents what to do in the event of a subsequent subroutine return.
+(The chain of return continuations constitutes a backtrace of the run-time stack.) In higher-level terms, a continuation is an abstraction that captures a context in which execution might continue. Continuations are fundamental to denotational semantics. Scheme 和 Ruby 天然支持，允许开发者定义新的控制流结构。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>就像 assignment，sequencing 也是命令式语言的核心。大多数命令式语言中，statements 列表通过 begin...end 或者 {...} 分割，然后可以用在单 statement 位置，称为 compound statement，有时候也称为 block。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>If 语句</p>
+<h3 id="641-短路条件"><a class="header" href="#641-短路条件">6.4.1 短路条件</a></h3>
+<p>大多数条件语句中的条件不需要存储，所以也不需要参与 register allocation，所以可以生成高效的代码（jump code），而且特别适合 6.1.5 提到的短路。jump code 不仅适用于条件语句，还适合循环，我们在 6.5.5 讨论</p>
+<p>在代码生成的一般结果中，由于根表达式的合成属性，最终结果需要寄存器保存，然后上下文使用寄存器名称获得值。在 jump code ，由于根表达式继承属性通知分支。比如，下面代码</p>
+<pre><code class="language-cpp">if ((A &gt; B) and (C &gt; D)) or (E != F) then
+  then_clause
+else 
+  else_clause
+</code></pre>
+<p>没有短路计算的语言中，生成的代码如下：</p>
+<pre><code class="language-assembly">r1 := A
+r2 := B
+r1 := r1 &gt; r2
+r2 := C
+r3 := D
+r2 := r2 &gt; r3
+r1 := r1 &amp; r2
+r2 := E
+r3 := F
+r2 := r2 != r3
+r1 := r1 | r2
+if r1 = 0 goto L2
+
+L1: then_clause
+	goto L3
+L2: else_clause
+L3:
+</code></pre>
+<p>jump code 生成的代码如下：</p>
+<pre><code class="language-assembly">r1 := A
+r2 := B
+if r1 &lt;= r2 goto L4
+r1 := C
+r2 := D
+if r1 &gt; r2 goto L1
+L4: r1 := E
+		r2 := F
+		if r1 = r2 goto L2
+L1: then_clause
+		goto L3
+L2: else clause
+L3:
+</code></pre>
+<p>布尔值不会显式存在寄存器，而是直接在控制流中使用。</p>
+<h3 id="642-caseswitch-statements"><a class="header" href="#642-caseswitch-statements">6.4.2 case/switch statements</a></h3>
+<p>case 语法可以将冗长的 if else 语句简化，但是优化语法写法并不是 case 语句的主要动机。只要动机是生成更高效的目标代码。if else 语句很自然的生成如下代码</p>
+<p><img src="assets/6.4.selection/image-20220905214035036.png" alt="image-20220905214035036" /></p>
+<p>不会像 if else 依次计算每个分支条件，case 语句计算条件结果，然后直接使用一条指令跳转到目标分支。</p>
+<p><img src="assets/6.4.selection/image-20220905214258365.png" alt="image-20220905214258365" /></p>
+<p>label T 位置的代码实际上是一个 jump 表。L6 的代码检查以确保控制表达式的结果在 jump 表中。</p>
+<h4 id="alternative-implementations"><a class="header" href="#alternative-implementations">Alternative Implementations</a></h4>
+<p>jump 表很快，而且节省空间。寻找执行分支的替代技术包括，sequential testing, hashing, binary search。sequential test 类似 if else 语句生成的季过，如果 label 数量较少，可以采用；hash 可以在 O（1） 时间找到，但是 hash table 就像 jump table，要求单独额外的空间存储表，使得不适用于很大范围的 label；binary search 也可以很快找到。</p>
+<p>为了 case 语句生成的代码更好，编译器通常要采用混合策略。编译过程会使用内部数据结构描述 label，然后选择采用那种哪种策略。</p>
+<h4 id="syntax-and-label-semantics"><a class="header" href="#syntax-and-label-semantics">Syntax and Label Semantics</a></h4>
+<p>各个语言的 case 语句时不同的，不同的语言使用不同 punctuation 来区分 label 和 arm。更重要的是，语言对于是否支持范围，是否允许默认分支，以及如何处理没有任何匹配的情况。</p>
+<h4 id="c-switch-statement"><a class="header" href="#c-switch-statement">C switch Statement</a></h4>
+<p>case 语句在 C（以及 C++ 和 Java）中在几个方面不太常见：</p>
+<pre><code class="language-cpp">switch (.../*controlling expression*/) {
+  case 1: clause_A
+    break;
+  case 2:
+  case 7: clause_B
+    break;
+  case 3:
+  case 4:
+  case 5: clause_C
+    break;
+  case 10: clause_D
+    break;
+  default: clause_E
+    break;
+}
+</code></pre>
+<p>swith 表达式必须是一个值而不能是一个范围。实际上也没有标签列表，但是可以通过允许标签来实现。而且每个分支必须显式使用 break 跳出 switch 语句，否则就会继续执行。通常都要在每个分支加 break，忘记加这是很多奇怪 bug 的来源。C# 继承了 C 家族的语法，但是每个非空分支必须以 goto，continue，break 或者 return 结束。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>不像已经讨论过的控制流机制，递归不需要特定语法。在任何提供 subroutine 抽象的语言中，只需要可以调用自己，或者调用其他函数（其他函数调用这个函数）就可以。大多数开发者在学习数据结构时了解到递归和迭代提供了等效的能力：任何迭代算法都可以使用递归重写，反之亦然。下面的小节中我们对比递归和迭代。然后考虑传递 unevaluated expression 个i函数的可能性，虽然因为实现开销通常不考虑，但是该技术有时可以让我们为仅在可能的输入子集中定义的函数优雅的代码，或者探索逻辑上无限的数据结构。</p>
+<h3 id="661-迭代和递归"><a class="header" href="#661-迭代和递归">6.6.1 迭代和递归</a></h3>
+<p>正如我们在 3.2 提到，Fortran 77 和当时的其他语言不允许递归。很少有语言不支持迭代。当然，现代编程语言基本两个都支持。迭代在命令式语言中更自然，因为其基于对于变量的重复修改。递归在函数式语言中更自然，因为不改变变量。在最终分析中，使用哪一种看口味以及场景。</p>
+<p>求和，迭代很自然，gcd 算法递归更自然。但是这两种都可以用另一种形式实现。</p>
+<h4 id="tail-recursion"><a class="header" href="#tail-recursion">Tail Recursion</a></h4>
+<p>有时会争论迭代比递归更高效。更精确地说是迭代的常规实现通常比递归的常规实现更高效。在上面的求和和 gcd 例子中，迭代实现确实更高效，因为递归会在运行时创建调用栈来存储局部变量和栈信息。为函数式语言优化的编译器，通常可以为递归生成高效的代码。尾递归函数不需要递归调用：return 值就是递归调用返回。对于这样的函数，动态分配栈空间是不必要的：编译器在递归调用可以直接使用当前栈。事实上，好的编译器会重写</p>
+<pre><code class="language-cpp">// recursive
+int gcd(int a, int b) {
+  if (a == b) return a;
+  else if (a &gt; b) return gcd(a - b, b);
+  else return gcd(a, b - a);
+}
+
+// -&gt;
+int gcd(int a, int b) {
+  start:
+  if (a == b) return a;
+  else if (a &gt; b) {
+    a = a - b;
+    goto start;
+  } else {
+    b = b - a;
+    goto start;
+  }
+}
+</code></pre>
+<p>通常不是尾递归的代码经过简单的转换就可以成为尾递归。最常见的转换称为 continuation-passing style。实际上，递归函数总是可以通过在递归之后做工作来避免在返回之后做任何工作。</p>
+<p>有些特定的转换通常由函数式语言的熟练用户采用。【译者注：请参考原文，译者不熟悉 Scheme 语言】</p>
+<h4 id="thinking-recursively"><a class="header" href="#thinking-recursively">Thinking Recursively</a></h4>
+<p>函数式语言的批评者有时会错误的争论，递归会导致算法效率较低的程序。比如，斐波那契数的数学定义就是递归的。如果常规实现，算法是指数复杂度的，同时存在线性复杂度的算法。</p>
+<p><img src="assets/6.6.recursion/image-20220905223610270.png" alt="image-20220905223610270" /></p>
+<p>当然，Scheme 可以这样写得到 O(n) 复杂度的递归算法。对于习惯函数式编程的开发者这非常自然。有人可能会说，这不是“真正的”递归，这只是把迭代使用尾递归的格式写出来。这个论点有一定可取性。尽管算法类似，但是 C 语言迭代版本和上面尾递归版本有很大的不同：后面这种没有 side effect。每次对于 fib-helper 的调用建立了新的 scope ，包含新的变量。语言实现可以利用先前 scope 的实例，但是要保证互不影响。</p>
+<h3 id="662-applicative--and-normal-order-evaluation"><a class="header" href="#662-applicative--and-normal-order-evaluation">6.6.2 Applicative- and Normal-Order Evaluation</a></h3>
+<p>到目前为止，我们在整个讨论都隐含一个假设，传递给 subroutine 的 expression 都已经完成了计算。这并不总是真的，实际上完全可以传递 unevaluated 的 expression 给 subroutine，然后在需要的时候再计算它。先计算被称为 applicative-order evaluation，后计算被称为 normal-order evaluation。【译者注：这里掠过 normal-order 的一些形式略述】</p>
+<p>Algol 60 对于用户定义的函数默认使用 normal-order。大概做出这种选择是为了模仿宏的行为。1960 年代的大多数程序员主要在汇编器中开发，习惯了宏。</p>
+<h4 id="lazy-evaluation"><a class="header" href="#lazy-evaluation">Lazy Evaluation</a></h4>
+<p>从清晰度和效率的角度来看，applicative-order 计算比 normal-order 更可取。在大多数语言中这更自然。但是在某些情况下，normal-order 计算可以获得更快的代码，或者 applicative-order 会导致运行时错误。这两种情况都是，normal-order 的计算可能都不需要执行。支持这种行为提供了 <em>lazy evaluation</em> 实现。在没有 side-effect 方面，normal-order 和 lazy evaluation 是同义词，但是实现跟踪已经计算的表达式，所以在同一个 referencing environment 如果需要多次可以重复利用不需要重复计算。</p>
+<p>delay expression 有时候称为 promise 。lazy-evaluation 的一个重要应用就是 infinite or lazy 数据结构，这些数据结构可按需“实例”。list 或者 tree 这些数据结构就是例子。</p>
+<p>【译者注：无限数据结构在 Rust 中也是比较困难的一个部分，可能跟这里的无限和 Rust 严格的语法有关系，todo 理清楚】</p>
+<div style="break-before: page; page-break-before: always;"></div><p>控制流最后一个分类是 nondeterminacy。是在选择之间故意未指定的结构。我们在 6.1.4 中已经看到例子，在大多数语言中，operator or subroutines arguments 可以任意顺序执行。</p>
+<p>有些语言，比如 Algol 68 和几种并发编程语言，提供了 nondeterminacy 机制，以便更好的覆盖 statement </p>
+<p>【译者注： Go 的 channel select ？】</p>
+<p><a href="../assets/supplementary_sections.pdf">网站附录</a> 有更多内容</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>在第 3 章我们描述了数据抽象的多个阶段，重点是 scope 机制下控制名称的可见性。我们从全局变量开始，它的生命周期贯穿程序执行期。然后讨论局部变量，它的生命周期限制在单个 subroutine 执行期间；嵌套 scope，允许 subroutine 自己为局部的；静态变量，它的生命周期也贯穿程序执行期，但是名称仅在单个 subroutine 可见。随后是模块，允许一组 subroutine 共享一组静态变量；模块类型，允许开发者实例化多个给定抽象；类，允许开发者定义一族相关抽象。</p>
 <p>原始的模块鼓励“管理者”风格的编程，模块到处为抽象类型。模块类型和类允许模块自己就是抽象类型。这种区别在两个方面。首先，显示 <code>create</code> <code>destroy</code> 过程需要从管理者模块导出，可以被模块类型实例的创建和销毁代替。其次，模块实例的方法调用代替了将导出类型作为参数传递的过程调用。类就是建立在模块作为类型机制上，然后增加了继承机制，继承允许通过扩展或者修改现有的抽象实现新的抽象，以及动态方法绑定，这可以使得新版本的抽象执行新的行为，或者在上下文中使用早版本的内容。一个类的实例被称为对象，基于类的语言或者编程称为面向对象。</p>
 <p>在第 3 章中对于数据抽象的逐步演化是组织想法的很有用的方法，但是并不能完整反映语言特性的发展。尤其是，对于面向对象编程的发展是基于模块发展的描述是不准确的。相反，面向对象编程的三个基本概念（封装，继承和动态方法绑定）都起源于18世纪60年代中期的 Simula 语言。对于现代的面向对象语言，Simula 在数据封装上显得比较弱，在1970年代 Clu, Modula, Euclid 在这个方面做出了重要贡献。同时，继承和动态方法绑定结合的思想也发生在 1970 年代。</p>
 <p>Smalltalk 采用了独特的“基于消息”的编程模型，具有动态类型和不常见的语法。动态类型使得实现相对较慢，而且延迟了错误报告。该语言还紧密整合到了图形编程环境中，因此很难跨系统移植。由于这些原因，并没有被广泛使用，并对后面的语言产生了影响。比如 Eiffle， C++，Ada 95， Fortran 2003， Java，C# 在很大程度上是 Smalltalk 中继承和动态方法绑定和“主流”命令式语言词法和语法的重新融合。另一条线是，Object-C 结合了 Smalltalk 风格的消息和动态类型，并以相对纯粹的方式结合了 C 的语法进行对象操作。对象的方向在函数式语言中也变得重要起来，比如 Lisp 对象系统，和 OCaml 的对象。</p>

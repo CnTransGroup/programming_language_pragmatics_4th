@@ -334,7 +334,62 @@ op -&gt; +
 <p>尽管句法和语法细节语言之间大有不同，但这些类别的顺序控制结构可以在大多数语言中发现。一个程序猿如果从这些类别来学习新语言，评估语言之间设计的权衡，算法的选择，而不是陷入到语言的语法细节中会更容易。</p>
 <p>Subroutines 是第9章的内容，并发是第 13 章的内容。异常处理在 9.4 和 13.4.4 中会分别讨论。本章会讨论剩下的几种类别。在 6.1 我们来讨论表达式的求值（expression）-- 所有高级顺序的基础表达块。来讨论 expression 的句法表示，操作符的优先级和关联性，操作数的执行顺序以及赋值的语法。尤其需要关注的是关联值的变量和关联引用的变量之间的区别。在 6.2 我们讨论结构化和非结构化（goto）的控制流程。</p>
 <p>不同类别的控制流在不同语言中的重要性差别很大。sequencing 是命令式语言（冯诺依曼，面向对象语言）的核心，但是在函数式语言中的角色就小一些，函数式语言强调 evaluation of expression，否定或者消除影响程序输出的 statements。类似的，函数式语言大量使用递归，命令式语言更喜欢迭代。逻辑语言倾向于消除或者隐藏顺序控制：开发者描述推理规则，语言实现负责找到应用这些规则的顺序。</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>在第 3 章我们描述了数据抽象的多个阶段，重点是 scope 机制下控制名称的可见性。我们从全局变量开始，它的生命周期贯穿程序执行期。然后讨论局部变量，它的生命周期限制在单个 subroutine 执行期间；嵌套 scope，允许 subroutine 自己为局部的；静态变量，它的生命周期也贯穿程序执行期，但是名称仅在单个 subroutine 可见。随后是模块，允许一组 subroutine 共享一组静态变量；模块类型，允许开发者实例化多个给定抽象；类，允许开发者定义一族相关抽象。</p>
+<div style="break-before: page; page-break-before: always;"></div><h3 id="611-precedence-and-associativity"><a class="header" href="#611-precedence-and-associativity">6.1.1 Precedence and Associativity</a></h3>
+<ul>
+<li>expression</li>
+<li>statement (side effect)</li>
+</ul>
+<h3 id="612-assignments"><a class="header" href="#612-assignments">6.1.2 Assignments</a></h3>
+<ul>
+<li>
+<p>reference or value
+<img src="assets/6.1.expression_evaluation/image-20220905160239666.png" alt="image-20220905160239666" /></p>
+<pre><code class="language-go">b := 2
+c := b
+a := b + c
+</code></pre>
+<p>reference model <strong>immutable</strong> is important. Reference model every variable is an l-value.</p>
+</li>
+<li>
+<p>Boxing</p>
+</li>
+<li>
+<p>Orthogonality 正交
+Algol 68 都是 expression
+C 同时使用 expression statement， C 提供了特殊的 expression forms for selection and sequencing. </p>
+</li>
+<li>
+<p>combination assignment operators 
++= ++ -- .eg.</p>
+</li>
+<li>
+<p>multiway assignment</p>
+</li>
+</ul>
+<h3 id="613-initialization"><a class="header" href="#613-initialization">6.1.3 Initialization</a></h3>
+<p>initialization assignment in c++ is different, assigenment should decollate first.</p>
+<p>Java and C# 不区分</p>
+<h3 id="614-ordering-within-expressions"><a class="header" href="#614-ordering-within-expressions">6.1.4 Ordering within Expressions</a></h3>
+<p>顺序很重要：</p>
+<ol>
+<li>side effects: <code>a-f(b)-c*d</code>如果 <code>f(b)</code>影响 d，这个表达式结果就取决于 f(b) 和 c*d 哪个先执行</li>
+<li>code improvement: the order of evaluation of subexpressions has an impact on both register allocation and instruction scheduling. 先后顺序影响代码优化，代码优化不会提供哪个先执行的保证，只保证正确性同时尽可能提升运行速度。</li>
+</ol>
+<p>所以，大多数编程语言的 order of evaluation of operands and arguments is undefined. </p>
+<h4 id="applying-mathematical-identities"><a class="header" href="#applying-mathematical-identities">applying mathematical identities</a></h4>
+<p>数学交换律，分配律，相关率。但是在计算机中随便重排操作可能会出现 overflow。或者浮点数在计算机中的表示是近似数，同一个表达式，不同顺序的运算可能会导致不同的结果。</p>
+<h3 id="615-short-circuit-evaluation"><a class="header" href="#615-short-circuit-evaluation">6.1.5 Short-Circuit Evaluation</a></h3>
+<p>boolean expression 提供了特殊而且重要的代码优化方法 -- 短路。</p>
+<p><img src="assets/6.1.expression_evaluation/image-20220905165231224.png" alt="image-20220905165231224" /></p>
+<p>这种形式的计算，可能会节省运行时间。</p>
+<p>但是也有不提供短路能力的语言，比如 Pascal </p>
+<pre><code class="language-Pas">p := my_list
+while (p &lt;&gt; nil) and (p^.key &lt;&gt; val) do 
+	p := p^.next
+</code></pre>
+<p>这种写法就不对，因为两个条件都会执行，就会执行 p = nil 的情况。</p>
+<p>但是短路也不总是正面的。比如两个条件 E1 和 E2 都有 side effect， 所以希望同时计算，再判断。有些语言提供了短路和非短路两种选择，比如 Ada 中使用 and / or 表示常规，and then / or else 表示短路。在 C 中，可以使用 &amp;  | 可以作为 &amp;&amp; || 的非短路选择。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>在第 3 章我们描述了数据抽象的多个阶段，重点是 scope 机制下控制名称的可见性。我们从全局变量开始，它的生命周期贯穿程序执行期。然后讨论局部变量，它的生命周期限制在单个 subroutine 执行期间；嵌套 scope，允许 subroutine 自己为局部的；静态变量，它的生命周期也贯穿程序执行期，但是名称仅在单个 subroutine 可见。随后是模块，允许一组 subroutine 共享一组静态变量；模块类型，允许开发者实例化多个给定抽象；类，允许开发者定义一族相关抽象。</p>
 <p>原始的模块鼓励“管理者”风格的编程，模块到处为抽象类型。模块类型和类允许模块自己就是抽象类型。这种区别在两个方面。首先，显示 <code>create</code> <code>destroy</code> 过程需要从管理者模块导出，可以被模块类型实例的创建和销毁代替。其次，模块实例的方法调用代替了将导出类型作为参数传递的过程调用。类就是建立在模块作为类型机制上，然后增加了继承机制，继承允许通过扩展或者修改现有的抽象实现新的抽象，以及动态方法绑定，这可以使得新版本的抽象执行新的行为，或者在上下文中使用早版本的内容。一个类的实例被称为对象，基于类的语言或者编程称为面向对象。</p>
 <p>在第 3 章中对于数据抽象的逐步演化是组织想法的很有用的方法，但是并不能完整反映语言特性的发展。尤其是，对于面向对象编程的发展是基于模块发展的描述是不准确的。相反，面向对象编程的三个基本概念（封装，继承和动态方法绑定）都起源于18世纪60年代中期的 Simula 语言。对于现代的面向对象语言，Simula 在数据封装上显得比较弱，在1970年代 Clu, Modula, Euclid 在这个方面做出了重要贡献。同时，继承和动态方法绑定结合的思想也发生在 1970 年代。</p>
 <p>Smalltalk 采用了独特的“基于消息”的编程模型，具有动态类型和不常见的语法。动态类型使得实现相对较慢，而且延迟了错误报告。该语言还紧密整合到了图形编程环境中，因此很难跨系统移植。由于这些原因，并没有被广泛使用，并对后面的语言产生了影响。比如 Eiffle， C++，Ada 95， Fortran 2003， Java，C# 在很大程度上是 Smalltalk 中继承和动态方法绑定和“主流”命令式语言词法和语法的重新融合。另一条线是，Object-C 结合了 Smalltalk 风格的消息和动态类型，并以相对纯粹的方式结合了 C 的语法进行对象操作。对象的方向在函数式语言中也变得重要起来，比如 Lisp 对象系统，和 OCaml 的对象。</p>

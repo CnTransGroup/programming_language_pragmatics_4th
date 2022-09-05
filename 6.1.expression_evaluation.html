@@ -139,7 +139,62 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <h3 id="611-precedence-and-associativity"><a class="header" href="#611-precedence-and-associativity">6.1.1 Precedence and Associativity</a></h3>
+<ul>
+<li>expression</li>
+<li>statement (side effect)</li>
+</ul>
+<h3 id="612-assignments"><a class="header" href="#612-assignments">6.1.2 Assignments</a></h3>
+<ul>
+<li>
+<p>reference or value
+<img src="assets/6.1.expression_evaluation/image-20220905160239666.png" alt="image-20220905160239666" /></p>
+<pre><code class="language-go">b := 2
+c := b
+a := b + c
+</code></pre>
+<p>reference model <strong>immutable</strong> is important. Reference model every variable is an l-value.</p>
+</li>
+<li>
+<p>Boxing</p>
+</li>
+<li>
+<p>Orthogonality 正交
+Algol 68 都是 expression
+C 同时使用 expression statement， C 提供了特殊的 expression forms for selection and sequencing. </p>
+</li>
+<li>
+<p>combination assignment operators 
++= ++ -- .eg.</p>
+</li>
+<li>
+<p>multiway assignment</p>
+</li>
+</ul>
+<h3 id="613-initialization"><a class="header" href="#613-initialization">6.1.3 Initialization</a></h3>
+<p>initialization assignment in c++ is different, assigenment should decollate first.</p>
+<p>Java and C# 不区分</p>
+<h3 id="614-ordering-within-expressions"><a class="header" href="#614-ordering-within-expressions">6.1.4 Ordering within Expressions</a></h3>
+<p>顺序很重要：</p>
+<ol>
+<li>side effects: <code>a-f(b)-c*d</code>如果 <code>f(b)</code>影响 d，这个表达式结果就取决于 f(b) 和 c*d 哪个先执行</li>
+<li>code improvement: the order of evaluation of subexpressions has an impact on both register allocation and instruction scheduling. 先后顺序影响代码优化，代码优化不会提供哪个先执行的保证，只保证正确性同时尽可能提升运行速度。</li>
+</ol>
+<p>所以，大多数编程语言的 order of evaluation of operands and arguments is undefined. </p>
+<h4 id="applying-mathematical-identities"><a class="header" href="#applying-mathematical-identities">applying mathematical identities</a></h4>
+<p>数学交换律，分配律，相关率。但是在计算机中随便重排操作可能会出现 overflow。或者浮点数在计算机中的表示是近似数，同一个表达式，不同顺序的运算可能会导致不同的结果。</p>
+<h3 id="615-short-circuit-evaluation"><a class="header" href="#615-short-circuit-evaluation">6.1.5 Short-Circuit Evaluation</a></h3>
+<p>boolean expression 提供了特殊而且重要的代码优化方法 -- 短路。</p>
+<p><img src="assets/6.1.expression_evaluation/image-20220905165231224.png" alt="image-20220905165231224" /></p>
+<p>这种形式的计算，可能会节省运行时间。</p>
+<p>但是也有不提供短路能力的语言，比如 Pascal </p>
+<pre><code class="language-Pas">p := my_list
+while (p &lt;&gt; nil) and (p^.key &lt;&gt; val) do 
+	p := p^.next
+</code></pre>
+<p>这种写法就不对，因为两个条件都会执行，就会执行 p = nil 的情况。</p>
+<p>但是短路也不总是正面的。比如两个条件 E1 和 E2 都有 side effect， 所以希望同时计算，再判断。有些语言提供了短路和非短路两种选择，比如 Ada 中使用 and / or 表示常规，and then / or else 表示短路。在 C 中，可以使用 &amp;  | 可以作为 &amp;&amp; || 的非短路选择。</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

@@ -745,7 +745,11 @@ public static int foo(int n) {
 <h4 id="memory-coherence"><a class="header" href="#memory-coherence">Memory Coherence</a></h4>
 <p>缓存引入了共享内存机器的一个严重问题：除非我们做一些特殊操作，距离近的核心改变会比距离远的核心改变更快被可见。这个问题--如何保持核心之间数据的一致性--被称为 coherence 问题。简单的 bus 总线机器上，这个问题容易解决：广播修改。当核心需要 write a cache line, 请求 exclusive 副本，等待其他核心的副本无效。bus 总线上的等待可以忽略不计，消息的自然顺序确定了谁获得这次 exclusive 副本。无效副本的核心需要从主存重新建立缓存。</p>
 <p>更大型的计算机（不使用 bus 总线）缓存一致性很难解决，略...【译者注：参看原文】</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="136-summary-and-concluding-remarks"><a class="header" href="#136-summary-and-concluding-remarks">13.6 Summary and Concluding Remarks</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>shared-memory concurrency 模型在多核处理器和多处理器服务器上广泛使用。message passing，仍然只在高端分布式计算中使用。超级计算机和大规模计算组使用 Fortran 和 C/C++ 的 MPI 库进行编程。分布式计算越来越依赖客户端-服务端在 TCP/IP 网络标准。在 shared-memory 计算中，message-passing 语言为特定的应用领域发展，或者为了研究或者教学目的。</p>
+<p><del>【译者注：本书成于 2015 年，Go 已经出现，不知道为何作者没有在此讨论 Go 语言】</del></p>
+<p>【译者注：Go 的 message passing 只是同步问题中的 message passing or shared memory ，这里更 high-level】</p>
+<p>更多内容在网站中的<a href="../assets/supplementary_sections.pdf">参考材料</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="136-summary-and-concluding-remarks"><a class="header" href="#136-summary-and-concluding-remarks">13.6 Summary and Concluding Remarks</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>最后，简短的来看看实现问题。</p>
 <p>第15章讨论了语义分析后必须完成的工作，生成可执行程序。前半部分用一般术语描述了典型编译器的后端，调查了中间表示，使用第4章的属性语法描述编译器如何产生汇编代码。后半部分描述了典型过程地址空间，解释了汇编程序和链接器如何将汇编代码转换输出为可执行代码。</p>
 <p>任何非平凡的语言实现，编译器都假设存在大量用于存储管理，异常处理，动态链接等预先存在的代码。更复杂的语言可能还需要事件，线程，消息等。当实现这些功能的库取决于编译器知识或者运行程序的结构时，它们被称为运行时系统。我们在16章讨论这个系统。尤其我们集中在虚拟机上，机器代码的运行时操作和反射机制，反射可以允许程序推理运行时结构和类型。</p>

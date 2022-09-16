@@ -197,10 +197,10 @@ int_sort(my_array);
 </code></pre>
 <p>其他语言，比如 C++，Java，C#，不需要显式声明。代替的是将范型看作重载的一种形式。为了保持语言易于管理，C++ 中的隐式实例化规则比重载规则限制更多。尤其是，编译器不能 coerce 子历程参数来匹配包含范型参数的类型表达式。</p>
 <p><img src="assets/7.3.parametric_polymorphism/image-20220916110341022.png" alt="image-20220916110341022" /></p>
-<p>这个图总结了 Ada，C++，Java 和 C# 的generics 特性，以及 Lisp 和 ML 的隐式参数多态。<a href="../assets/supplementary_sections.pdf">扩展材料</a>C-7.3.2 中有更多阐述。</p>
+<p>这个图总结了 Ada，C++，Java 和 C# 的generics 特性，以及 Lisp 和 ML 的隐式参数多态。<a href="./assets/supplementary_sections.pdf">扩展材料</a>C-7.3.2 中有更多阐述。</p>
 <h2 id="732-generics-in-c-java-and-c"><a class="header" href="#732-generics-in-c-java-and-c">7.3.2 Generics in C++, Java and C#</a></h2>
 <p>比较 C++ 和 Java 和 C# 对于generic 特性支持可以看到设计中的关键权衡。C++ 是最具雄心的。模板几乎可以完成所有需要相似但不同的抽象机制的编程。Java 和 C# 就更专注于多态。Java 的设计收到向后兼容的严重影响，不仅是语言的版本，还有虚拟机和标准库。C# 设计者虽然以现有语言为基础，但是并没有收到约束，从一开始就计划了 generic，并对 .NET 虚拟机提供了新的支持。</p>
-<p><a href="../assets/supplementary_sections.pdf">网站内容</a> 中更具体讨论了 C++，Java 和 C# 中的 generics，考虑了不同设计对于错误信息的影响，以及生成代码的速度和数量，以及表达能力的强弱。我们注意到支持 类和方法的 generic 机制和广泛 generic 参数的支持机制非常不同。</p>
+<p><a href="./assets/supplementary_sections.pdf">网站内容</a> 中更具体讨论了 C++，Java 和 C# 中的 generics，考虑了不同设计对于错误信息的影响，以及生成代码的速度和数量，以及表达能力的强弱。我们注意到支持 类和方法的 generic 机制和广泛 generic 参数的支持机制非常不同。</p>
 
                     </main>
 

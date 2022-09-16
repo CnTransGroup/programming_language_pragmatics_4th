@@ -148,7 +148,7 @@
 </ol>
 <p>通常我们使用 concurrent 来表征同时运行两个或者更多任务的系统。在这个定义下，coroutines 不是 concurrent， 因为在给定的时间，只有一个在运行。concurrent 系统是 parallel 的如果物理上同时运行多个任务；这要求多个处理器。区别是纯粹的实现和性能问题：从语义角度来看，在无法预测的时间之间切换任务的系统的真实 parallelism 和 quasiparallelism 并没有区别。如果处理器是物理分离的，parallel 系统就是分布式的。根据这些定义，concurrent 满足三种动机，parallel 满足第二和第三点，distributed 只满足第三点。</p>
 <p>本章关注 concurrent 和 parallelism。2005年以来，随着多核处理器的流行，parallelism 成为被关心的问题。我们很少谈到 distribution。虽然语言为分布式计算设计，大多数分布式系统是在联网的处理器中执行单独的程序，使用消息系统进行通信。</p>
-<p>我们开始于现代计算中可能出现的 parallelism 方法概述。我们的概述会涉及 concurrency 的动机，race 的概念（是并发程序中复杂度的来源）。我们简要介绍现代多核和多处理器。在 13.2 中我们考虑两种并发模型，shared-memory model 和 message-passing model，语言和库的实现。基于 coroutine，我们解释语言或者库如何创建和调度线程。13.3 集中于 shared-memory 同步的底层机制。13.4 扩展到语言结构层面的讨论。message-passing model 在 13.5 中讨论（实际上更多的在<a href="../assets/supplementary_sections.pdf">扩展文档</a>中）</p>
+<p>我们开始于现代计算中可能出现的 parallelism 方法概述。我们的概述会涉及 concurrency 的动机，race 的概念（是并发程序中复杂度的来源）。我们简要介绍现代多核和多处理器。在 13.2 中我们考虑两种并发模型，shared-memory model 和 message-passing model，语言和库的实现。基于 coroutine，我们解释语言或者库如何创建和调度线程。13.3 集中于 shared-memory 同步的底层机制。13.4 扩展到语言结构层面的讨论。message-passing model 在 13.5 中讨论（实际上更多的在<a href="./assets/supplementary_sections.pdf">扩展文档</a>中）</p>
 
                     </main>
 

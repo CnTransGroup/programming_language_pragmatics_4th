@@ -314,7 +314,7 @@ op -&gt; +
 <p>正如有很多不同的编程语言一样，也有很多种机器语言，尽管机器语言的多样性要少很多。每种机器语言对应不同的处理器架构。正式来说，架构就是硬件与软件的接口，即编译器生成的或者程序员为裸机手写的语言。处理器的实现是架构在硬件的实现。为了生成正确的代码，编译器作者只需要理解目标架构。为了生成高效的代码，还要了解实现，因为这决定了生成代码的执行速度。</p>
 <hr />
 <p>网站有更详细的介绍，比如 x86 的 CSIC 指令集，以及 ARM 的 RISC 指令集。</p>
-<p>更详细的请看<a href="../assets/chapter_05.pdf">chapter5</a></p>
+<p>更详细的请看<a href="./assets/chapter_05.pdf">chapter5</a></p>
 <div style="break-before: page; page-break-before: always;"></div><p>在第一部分的基础上，我们现在来讨论大多数编程语言核心的问题：控制流，数据类型，以及控制和数据的抽象。</p>
 <p>第6章讨论控制流，包括 expression evaluation, sequencing, selection, iteration, and recursion. 很多时候我们看到设计决策反映了对于互补或者竞争策略概念和效率上的权衡。引用和值的区别，提前或者懒惰计算问题会在后续章节反复出现。</p>
 <p>接下来两章讨论类型。第7章包括类型系统和类型检查，包括等效性，兼容性和类型推断等概念。还讨论了显式和隐式形式的参数多态。第8章介绍了 compsite type 的最新研究，包括 records, variants, arrays, strings, sets, pointers, lists, files。指针部分介绍了垃圾收集技术。</p>
@@ -591,7 +591,7 @@ ti_delete(&amp;ti);
 <p>这个代码和更结构化的方案之间有两个主要区别：（1）循环的语法不够优雅（2）迭代器代码是简单类型有一些关联函数。</p>
 <h3 id="654-generators-in-icon"><a class="header" href="#654-generators-in-icon">6.5.4 Generators in Icon</a></h3>
 <p>Icon 泛化了 Iterator 的概念，提供了一种机制，可以使得任意表达式按需列举枚举值。</p>
-<p>更深入的讨论需要查看<a href="../assets/supplementary_sections.pdf">伴侣网站</a></p>
+<p>更深入的讨论需要查看<a href="./assets/supplementary_sections.pdf">伴侣网站</a></p>
 <h3 id="655-logically-controlled-loops"><a class="header" href="#655-logically-controlled-loops">6.5.5 Logically Controlled Loops</a></h3>
 <p>对比 enumeration-controlled 循环，logically controlled 循环具有更少的语义细节。要回答的唯一问题就是测试终止条件的循环体位置。大多数常见的做法是在每次迭代之前。while 在 Algol-W 中引入：</p>
 <pre><code class="language-cpp">while condition do statement
@@ -668,7 +668,7 @@ int gcd(int a, int b) {
 <div style="break-before: page; page-break-before: always;"></div><p>控制流最后一个分类是 nondeterminacy。是在选择之间故意未指定的结构。我们在 6.1.4 中已经看到例子，在大多数语言中，operator or subroutines arguments 可以任意顺序执行。</p>
 <p>有些语言，比如 Algol 68 和几种并发编程语言，提供了 nondeterminacy 机制，以便更好的覆盖 statement </p>
 <p>【译者注： Go 的 channel select ？】</p>
-<p><a href="../assets/supplementary_sections.pdf">网站附录</a> 有更多内容</p>
+<p><a href="./assets/supplementary_sections.pdf">网站附录</a> 有更多内容</p>
 <div style="break-before: page; page-break-before: always;"></div><p>大多数编程语言都有表达式或者对象的类型的概念。类型有几个重要目的：</p>
 <ol>
 <li>类型提供了很多操作的隐式上下文，开发者不需要显式表达。比如在 C 中，如果 <code>a or b</code> 是整数 <code>a + b</code> 表示整数，或者 <code>a or b</code> 是浮点数<code>a + b</code> 是浮点数。类似的 Pascal <code>new p </code>，p 是指针，将会分配 p 指向类型的确定大小的内存，开发者不需要指定大小。在 C++ ，Java 和 C# 中 <code>new new_type()</code> 不仅分配内存，还调用类型绑定的初始化操作。</li>
@@ -991,10 +991,10 @@ int_sort(my_array);
 </code></pre>
 <p>其他语言，比如 C++，Java，C#，不需要显式声明。代替的是将范型看作重载的一种形式。为了保持语言易于管理，C++ 中的隐式实例化规则比重载规则限制更多。尤其是，编译器不能 coerce 子历程参数来匹配包含范型参数的类型表达式。</p>
 <p><img src="assets/7.3.parametric_polymorphism/image-20220916110341022.png" alt="image-20220916110341022" /></p>
-<p>这个图总结了 Ada，C++，Java 和 C# 的generics 特性，以及 Lisp 和 ML 的隐式参数多态。<a href="../assets/supplementary_sections.pdf">扩展材料</a>C-7.3.2 中有更多阐述。</p>
+<p>这个图总结了 Ada，C++，Java 和 C# 的generics 特性，以及 Lisp 和 ML 的隐式参数多态。<a href="./assets/supplementary_sections.pdf">扩展材料</a>C-7.3.2 中有更多阐述。</p>
 <h2 id="732-generics-in-c-java-and-c"><a class="header" href="#732-generics-in-c-java-and-c">7.3.2 Generics in C++, Java and C#</a></h2>
 <p>比较 C++ 和 Java 和 C# 对于generic 特性支持可以看到设计中的关键权衡。C++ 是最具雄心的。模板几乎可以完成所有需要相似但不同的抽象机制的编程。Java 和 C# 就更专注于多态。Java 的设计收到向后兼容的严重影响，不仅是语言的版本，还有虚拟机和标准库。C# 设计者虽然以现有语言为基础，但是并没有收到约束，从一开始就计划了 generic，并对 .NET 虚拟机提供了新的支持。</p>
-<p><a href="../assets/supplementary_sections.pdf">网站内容</a> 中更具体讨论了 C++，Java 和 C# 中的 generics，考虑了不同设计对于错误信息的影响，以及生成代码的速度和数量，以及表达能力的强弱。我们注意到支持 类和方法的 generic 机制和广泛 generic 参数的支持机制非常不同。</p>
+<p><a href="./assets/supplementary_sections.pdf">网站内容</a> 中更具体讨论了 C++，Java 和 C# 中的 generics，考虑了不同设计对于错误信息的影响，以及生成代码的速度和数量，以及表达能力的强弱。我们注意到支持 类和方法的 generic 机制和广泛 generic 参数的支持机制非常不同。</p>
 <div style="break-before: page; page-break-before: always;"></div><p>简单说，primitive 数据比如整数，浮点数，字符，相等测试和赋值非常直观，有着明显的语义和实现(位对比和复制)。对于更加抽象和复杂的数据类型，语义和实现上的问题就出现了。</p>
 <p>比如考虑两个字符串是否相等：</p>
 <ul>
@@ -1018,7 +1018,7 @@ int_sort(my_array);
 <p>在第 3 章中对于数据抽象的逐步演化是组织想法的很有用的方法，但是并不能完整反映语言特性的发展。尤其是，对于面向对象编程的发展是基于模块发展的描述是不准确的。相反，面向对象编程的三个基本概念（封装，继承和动态方法绑定）都起源于18世纪60年代中期的 Simula 语言。对于现代的面向对象语言，Simula 在数据封装上显得比较弱，在1970年代 Clu, Modula, Euclid 在这个方面做出了重要贡献。同时，继承和动态方法绑定结合的思想也发生在 1970 年代。</p>
 <p>Smalltalk 采用了独特的“基于消息”的编程模型，具有动态类型和不常见的语法。动态类型使得实现相对较慢，而且延迟了错误报告。该语言还紧密整合到了图形编程环境中，因此很难跨系统移植。由于这些原因，并没有被广泛使用，并对后面的语言产生了影响。比如 Eiffle， C++，Ada 95， Fortran 2003， Java，C# 在很大程度上是 Smalltalk 中继承和动态方法绑定和“主流”命令式语言词法和语法的重新融合。另一条线是，Object-C 结合了 Smalltalk 风格的消息和动态类型，并以相对纯粹的方式结合了 C 的语法进行对象操作。对象的方向在函数式语言中也变得重要起来，比如 Lisp 对象系统，和 OCaml 的对象。</p>
 <p>最近，动态类型对象重新在 Python 和 Ruby 中获得了知名度，同时静态类型对象作为 Object-C 的继任者（跟随 OCmal）也出现在了 Scala ，Go 和 Swift 中，将动态类型对象建立在静态类型语言中。</p>
-<p>在 10.1 中我们概述面向对象编程以及三个主要概念。在 10.2 中讨论数据隐藏和封装的细节。然后在 10.3 中讨论对象初始化和 finalization，以及 10.4 中的动态方法绑定。在 10.6 中（大多数内容在网站上<a href="../assets/supplementary_sections.pdf">这里也有</a>）考虑多重继承。正如我们看到的多重继承引入了一些特别棘手的语法和实现挑战。最后，在10.7中，我们重新审视面向对象的定义，考虑语言应该或者在多大程度上讲所有事物作为对象进行建模。我们大多数讨论集中在 Smalltalk，Eiffel，C++，Java，只会少量提及其他语言。我们在 14.4.4 中会重新回到动态类型对象的讨论。</p>
+<p>在 10.1 中我们概述面向对象编程以及三个主要概念。在 10.2 中讨论数据隐藏和封装的细节。然后在 10.3 中讨论对象初始化和 finalization，以及 10.4 中的动态方法绑定。在 10.6 中（大多数内容在网站上<a href="./assets/supplementary_sections.pdf">这里也有</a>）考虑多重继承。正如我们看到的多重继承引入了一些特别棘手的语法和实现挑战。最后，在10.7中，我们重新审视面向对象的定义，考虑语言应该或者在多大程度上讲所有事物作为对象进行建模。我们大多数讨论集中在 Smalltalk，Eiffel，C++，Java，只会少量提及其他语言。我们在 14.4.4 中会重新回到动态类型对象的讨论。</p>
 <div style="break-before: page; page-break-before: always;"></div><p>面向对象编程可以看作通过已经存在的抽象进行扩展或者改进来重用代码的尝试。首先看一个例子，考虑一个整数集合，通过双向链表来实现。【译者注：这里的代码描述和相关叙述参考原书，翻译比较麻烦，而且很容易看懂】</p>
 <p>关键词：</p>
 <ul>
@@ -1297,7 +1297,7 @@ call *(r2 + 4) -- method address
 <p>现在 student 类有 person 和 system_user 的所有字段和方法。</p>
 <p>多重继承也出现在了多种语言中，包括 CLOS，OCaml，Python。很多老语言，包括 Simula，Smalltalk，Modula-3和 Oberson，只支持单继承。混合继承是一种常见的妥协。</p>
 <hr />
-<p>多重继承也引入了大量语法和实现上的问题，在<a href="../assets/supplementary_sectoins.pdf">这里</a>有更深入的阐述：</p>
+<p>多重继承也引入了大量语法和实现上的问题，在<a href="./assets/supplementary_sectoins.pdf">这里</a>有更深入的阐述：</p>
 <ul>
 <li>假设有两个父类提供了同名方法，子类使用那个，如何都使用？</li>
 <li>假设两个父类派生自同一个公共爷爷类，孙子类有几份爷爷类的拷贝？</li>
@@ -1307,11 +1307,11 @@ call *(r2 + 4) -- method address
 <p>多重继承中公共爷爷类问题称为重复继承。重复继承存在多份称为复制继承，重复继承只有一份称为共享继承。Eiffel 默认为共享继承，C++默认为负值继承。两种语言都允许开发者在需要时获取另一个选项。</p>
 <div style="break-before: page; page-break-before: always;"></div><p>本章开始，我们描述了面向对象编程的三个主要概念：封装，继承，动态方法绑定（多钛）。封装允许实现细节隐藏在简单接口之后。继承允许新的抽象定义在已有抽象之上，自动复用已有抽象。动态方法绑定允许在老的抽象上下文中使用新抽象的新行为。</p>
 <p>不同的编程语言在不同程度上支持这些基本概念。特别的是，不同语言在要求开发者以面向对象风格编写程序上有所不同。有些作者认为真正的面向对象语言使得写非面向对象的程序非常困难。从纯粹的角度看，一门面向对象语言应该呈现一个统一计算对象模型，数据类型都是类，每个 variable 都是对象的引用，每个 subroutine 都是对象方法。而且，应该从拟人术语来思考对象：作为所有计算活动的实体。</p>
-<p>Smalltalk 和 Ruby 比较贴近这种思想。事实上，如后续所述（主要内容在<a href="../assets/supplementary_sections.pdf">扩充内容</a>），即使流程控制机制，比如选择，迭代在 Smalltalk 中也是方法调用建模。另一方面，Ada 95 和 Fortran 2003 可能是冯诺依曼语言的最佳描述，并且允许开发者以面向对象风格编程。</p>
+<p>Smalltalk 和 Ruby 比较贴近这种思想。事实上，如后续所述（主要内容在<a href="./assets/supplementary_sections.pdf">扩充内容</a>），即使流程控制机制，比如选择，迭代在 Smalltalk 中也是方法调用建模。另一方面，Ada 95 和 Fortran 2003 可能是冯诺依曼语言的最佳描述，并且允许开发者以面向对象风格编程。</p>
 <p>所以，C++ 如何？它有非常丰富的特性，有些（多重继承，访问控制，严格初始化顺序，析构，模板）在面向对象编程中很有用，但是 Smalltalk 中没有。同时，它也有很多小问题。它的简单类型不是类。可以在类外存在 subroutine。使用 static 方法绑定以及多重继承中的重复问题。不检查的C风格的类型转换给类型检查和访问控制留下了问题。缺少垃圾收集是创建正确，自包含抽象的障碍。可能大多数是由于 C++ 要保留与 C 的兼容，允许开发者不使用面向对象模型。有人建议 C++程序员不要先学 C：他们不希望在新语言中写C风格的程序。总而言之，可以肯定地说 C++ 是一门面向对象语言，就像说 Common Lisp 是一门函数式语言一样。除垃圾收集外，C++ 提供了所有必要的工具，但是开发者确实需要“正确“使用才行。</p>
 <h3 id="1071-smalltalk-对象模型"><a class="header" href="#1071-smalltalk-对象模型">10.7.1 Smalltalk 对象模型</a></h3>
 <p>从历史上看，Smalltalk 是规范的面向对象语言。该语言的原始版本是 Alan kay 在 1960 年代后期在犹他大学攻读博士时设计的。随后被施乐 PARC 的软件概念小组采用，并在 1970 年代经历了五次重要修订。最终形成了 Smalltalk-80 语言。</p>
-<p><a href="../assets/supplementary_sections.pdf">扩充内容</a> 可以参考到更多内容</p>
+<p><a href="./assets/supplementary_sections.pdf">扩充内容</a> 可以参考到更多内容</p>
 <div style="break-before: page; page-break-before: always;"></div><p>正如我们在第一章中指出，传统上，编程语言是简单划分为了命令家族和声明家族。我们在第一部分和第二部分已经讨论了每个家族的重要问题。同时我们涵盖的主题还包括，句法，语义，命名，类型，抽象。前面我们太多集中于主流命令语言上，第三部分让我们偏离一下。</p>
 <p>函数式和逻辑型语言是重要的非命令语言选择。我们在第11章和12章讨论。在每种情况，我们围绕代表性语言进行讨论：Scheme OCaml 是典型的函数式语言，Prolog 是典型的逻辑型语言。在第11章我们还涉及到提前还是懒惰计算，以及函数作为第一公民，高阶函数。在12章我们涉及使全自动化通用逻辑编写困难的问题，并描述实际使用中模型的限制。两章中可选部分都需要数学基础：Lambda Calculus for functional language, Predicate Calculus for logic programming.</p>
 <p>剩下的两章讨论并发和脚本模型，这两个模型正变得越来越流行，并且是跨范式的。并发是由网络计算机的硬件并行以及多线程处理器和片上多核心驱动的。脚本是由万维网的增长以及开发者对开发效率（开发效率比运行效率更重要）的重视驱动的。</p>
@@ -1326,7 +1326,7 @@ call *(r2 + 4) -- method address
 </ol>
 <p>通常我们使用 concurrent 来表征同时运行两个或者更多任务的系统。在这个定义下，coroutines 不是 concurrent， 因为在给定的时间，只有一个在运行。concurrent 系统是 parallel 的如果物理上同时运行多个任务；这要求多个处理器。区别是纯粹的实现和性能问题：从语义角度来看，在无法预测的时间之间切换任务的系统的真实 parallelism 和 quasiparallelism 并没有区别。如果处理器是物理分离的，parallel 系统就是分布式的。根据这些定义，concurrent 满足三种动机，parallel 满足第二和第三点，distributed 只满足第三点。</p>
 <p>本章关注 concurrent 和 parallelism。2005年以来，随着多核处理器的流行，parallelism 成为被关心的问题。我们很少谈到 distribution。虽然语言为分布式计算设计，大多数分布式系统是在联网的处理器中执行单独的程序，使用消息系统进行通信。</p>
-<p>我们开始于现代计算中可能出现的 parallelism 方法概述。我们的概述会涉及 concurrency 的动机，race 的概念（是并发程序中复杂度的来源）。我们简要介绍现代多核和多处理器。在 13.2 中我们考虑两种并发模型，shared-memory model 和 message-passing model，语言和库的实现。基于 coroutine，我们解释语言或者库如何创建和调度线程。13.3 集中于 shared-memory 同步的底层机制。13.4 扩展到语言结构层面的讨论。message-passing model 在 13.5 中讨论（实际上更多的在<a href="../assets/supplementary_sections.pdf">扩展文档</a>中）</p>
+<p>我们开始于现代计算中可能出现的 parallelism 方法概述。我们的概述会涉及 concurrency 的动机，race 的概念（是并发程序中复杂度的来源）。我们简要介绍现代多核和多处理器。在 13.2 中我们考虑两种并发模型，shared-memory model 和 message-passing model，语言和库的实现。基于 coroutine，我们解释语言或者库如何创建和调度线程。13.3 集中于 shared-memory 同步的底层机制。13.4 扩展到语言结构层面的讨论。message-passing model 在 13.5 中讨论（实际上更多的在<a href="./assets/supplementary_sections.pdf">扩展文档</a>中）</p>
 <div style="break-before: page; page-break-before: always;"></div><p>concurrency 不是什么新思想。很多基础理论是 1960 年代，Algol 68 就已经包含的并发编程功能。然而，对并发的兴趣广泛流行是最近发生的，部分源于多核，多处理器机器的成本大幅降低，部分源于图形，多媒体和网络应用的流行，这些应用天生并发。</p>
 <h4 id="levels-of-parallelism"><a class="header" href="#levels-of-parallelism">Levels of Parallelism</a></h4>
 <p>Parallelism 在现代计算机系统的每个层次都有体现。在电路和门级相对容易利用并发，信号可以同时在数千个连接上传递。当升级到处理器和核心时，然后到运行在它们上面的很多软件层级，parallelism 粒度--任务的规模和复杂性--随之提升，而且越来越难以弄清每个任务应该完成什么以及任务应该如何协调。</p>
@@ -1389,7 +1389,7 @@ public static int foo(int n) {
 <div style="break-before: page; page-break-before: always;"></div><p>shared-memory concurrency 模型在多核处理器和多处理器服务器上广泛使用。message passing，仍然只在高端分布式计算中使用。超级计算机和大规模计算组使用 Fortran 和 C/C++ 的 MPI 库进行编程。分布式计算越来越依赖客户端-服务端在 TCP/IP 网络标准。在 shared-memory 计算中，message-passing 语言为特定的应用领域发展，或者为了研究或者教学目的。</p>
 <p><del>【译者注：本书成于 2015 年，Go 已经出现，不知道为何作者没有在此讨论 Go 语言】</del></p>
 <p>【译者注：Go 的 message passing 只是同步问题中的 message passing or shared memory ，这里更 high-level】</p>
-<p>更多内容在网站中的<a href="../assets/supplementary_sections.pdf">参考材料</a></p>
+<p>更多内容在网站中的<a href="./assets/supplementary_sections.pdf">参考材料</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="136-summary-and-concluding-remarks"><a class="header" href="#136-summary-and-concluding-remarks">13.6 Summary and Concluding Remarks</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>最后，简短的来看看实现问题。</p>
 <p>第15章讨论了语义分析后必须完成的工作，生成可执行程序。前半部分用一般术语描述了典型编译器的后端，调查了中间表示，使用第4章的属性语法描述编译器如何产生汇编代码。后半部分描述了典型过程地址空间，解释了汇编程序和链接器如何将汇编代码转换输出为可执行代码。</p>
@@ -1470,7 +1470,7 @@ public static int foo(int n) {
 <div style="break-before: page; page-break-before: always;"></div><p>在第15章中，我们讨论了代码生成，编译器后端的汇编，目标代码的联接。这些技术导致了正确但是没有最佳优化的代码：有很多冗余计算，寄存器，计算单元，现代微处理器缓存不高效的使用。本章介绍代码提升：专门用来生成良好（快速）代码的汇编阶段。如同 1.6.4 所述，代码提升通常被称为 optimization（优化），尽管很少存在绝对意义上的优化。</p>
 <p>我们的研究将考虑简单的 peephole 优化，该优化在很小的指令窗口内“清理”生成的目标代码；local 优化，该优化为单独的代码块生成近乎最佳优化的代码；global 优化，该优化在整个 subroutine 级别进行激进的代码优化。我们不涉及进程间优化；感性起的读者可以参考本书的参考。此外，即使我们涉及的话题，我们更倾向于使得代码提升过程清晰而不是探讨其中的细节。大部分讨论将围绕单个 subroutine 的连续改进。这个扩展的示例允许我们说明几种关键形式的代码改进方法并且不会陷入到具体的细节中。</p>
 <hr />
-<p>更详细的请看<a href="../assets/chapter_17.pdf">chapter17</a></p>
+<p>更详细的请看<a href="./assets/chapter_17.pdf">chapter17</a></p>
 
                     </main>
 

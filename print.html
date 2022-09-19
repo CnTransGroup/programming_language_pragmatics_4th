@@ -1091,7 +1091,61 @@ int_sort(my_array);
 }
 </code></pre>
 <p>编译器可以内联每个subroutine 调用时真实的调用。因为二叉树一半时叶子结点，这种展开会消除运行时一般的动态调用。递归函数内联有程度区分。（可以消除多少动态调用）</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>有了运行时栈的布局理解，我们可以考虑更加通用的控制抽象--coroutines。就像 consinuation, coroutine 也通过 closure 表征（代码地址，和关联的环境），我们可以通过 nonlocal goto 跳转，这种情况下，有一个特殊的操作 transfer。两个概念的主要不同点是: continuation 是常量，一旦创建不变，coroutine 每次运行都会改变。当 goto 到一个 continuation， 老的程序计数器被丢弃，除非我们显式创建一个新的 continuation 来持有。当使用 tranfer 从一个 coroutine 到另一个，我们老的程序计数器还是被存储着：我们离开的 coroutine 更新反映这个事实。因此，我们在同样的 continuation 多次执行 goto，每个 jump 都开始于同样的位置，但是如果在同样的 coroutine 执行 transfer 多次，每个 jump 从离开的位置执行。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>之前多次提到了异常处理机制。我们延迟到这里深入探讨因为异常处理要求语言实现 unwind subroutine 调用栈。</p>
+<p>异常的定义：不符合预期的，至少是不寻常的条件在程序运行期间出现，而且无法在局部上下文中处理。可能被语言实现自动识别抛出，也可能开发者自己使用 raise 或者 throw 显式抛出。最常见的异常是多种运行时错误。比如在 I/O 库中，输入 routine 可能在读到请求值之前遇到文件结尾，或者当期望数字时发现分号或者字母。没有异常机制时，程序员有三种选择处理这种错误，都不让人满意：</p>
+<ol>
+<li>当没有值可以返回时，“创造”一个caller 可以使用的值</li>
+<li>返回一个显式的“状态”给 caller，每次调用后要处理。更常见的是，这个状态是一个额外的显式的参数。有些语言中，返回值和状态可以作为元组一起返回</li>
+<li>caller 传递闭包作为错误处理 routine。</li>
+</ol>
+<p>这些方法 2，3 会影响程序的正常逻辑，1 只适用于部分场景。</p>
+<p>很多新语言提供了异常机制。比如 C++ 中</p>
+<pre><code class="language-cpp">try {
+  if (something_unexpected) 
+    throw my_error(&quot;oops!&quot;);
+} catch(my_error e) {
+  ...
+}
+</code></pre>
+<p>而且 try catch 也可以嵌套。如果当前的 subroutine 没有 handler，就会继续传播，如果到了主程序都没有 handler 会终止程序。</p>
+<p>从某种意义上说，异常处理对子历程的调用顺序的依赖性可以被认为动态绑定的一种形式。与其说是 handler 在调用 routine 过程中动态绑定到所有 routine 的错误上，不如说是 handler 词法上绑定到了 called routine 的表达式或者语句上。</p>
+<p>实际上，异常处理一般执行三种操作。第一，最理想的，handler 可以恢复并继续执行程序。比如，对于 OOM 异常，handler 可以要求操作系统分配额外的空间，然后继续完成处理。第二，当异常出现在局部 handler 不能处理的情况，清理局部申请的空间，抛出异常，从而传播异常直到可以处理。第三，如果无法恢复，handler 至少可以打印出有帮助的日志。</p>
+<h2 id="941-defining-excepitons"><a class="header" href="#941-defining-excepitons">9.4.1 Defining Excepitons</a></h2>
+<p>很多语言中，动态语义错误自动导致异常，程序可以 catch 它们。程序员也可以定义应用特定的异常。预定义的异常包括算术溢出，除零，input 中的文件结束，subcript 或者 subrange 错误，空指针解引用。这些作为异常而不是重大错误的理由是不能出现在有效的程序中。有些其他动态错误（比如没有返回指定的返回值）在大多数语言中是重大错误。在 C++ 和 Common Lisp 中，异常都是程序员定义的。</p>
+<p>在大多数面向对象语言中，异常就是用户定义或者预定义的类。</p>
+<h2 id="942-excepition-propagation"><a class="header" href="#942-excepition-propagation">9.4.2 Excepition Propagation</a></h2>
+<p>大多数语言中，代码块有异常 handler 列表。在 C++ 中</p>
+<pre><code class="language-cpp">try {
+  
+} catch(end_of_file e1) {
+  ...
+} catch(io_error e2) {
+  ...
+} catch(...) {
+  // handler for any excepiton not previously named
+}
+</code></pre>
+<p>异常发生时，handler 按序检查；控制权转移给第一个匹配上的 handler。如果没有最后一个 handler ，未匹配的异常会继续“向外”传递。</p>
+<p>递归 subroutine 中声明的异常会被最近的 handler 捕获。如果异常被传递出去，就不能被命名 handler 捕获，只能被 catch-all 捕获。在并发语言中，如果没有被线程捕获，异常在 Modula-3 和 C++ 会导致程序异常退出。Ada 和 Java 中，只有受影响的线程会退出。C# 依赖实现。</p>
+<h3 id="handlers-on-expression"><a class="header" href="#handlers-on-expression">Handlers on Expression</a></h3>
+<p>在面向表达式的语言中，比如 ML 或者 Common Lisp，异常的 handler 绑定了一个表达式，而不是语句。在 OCaml 中，handler 像这样：</p>
+<pre><code class="language-ocaml">let foo = try a / b with Division_by_zero -&gt; max_int;
+</code></pre>
+<p><code>a/b</code> 是受保护的表达式，<code>try, with</code> 是关键字，<code>Division_by_zero</code> 是一个异常，<code>max_int</code> 是异常发生的代替受保护表达式的表达式。</p>
+<h3 id="cleanup-operations"><a class="header" href="#cleanup-operations">Cleanup Operations</a></h3>
+<p>在匹配 handler 的过程中，异常处理机制必须 unwind 运行时栈。回收 frame 不仅要求将空间从栈推出，还要保存的寄存器。</p>
+<p>在 C++ 中，异常离开 scope，不管是 subroutine 还是嵌套的 scope，要求语言实现本 scope 的对象的调用析构函数。其他语言也有类似机制。</p>
+<h2 id="943-implementation-of-excepitons"><a class="header" href="#943-implementation-of-excepitons">9.4.3 Implementation of Excepitons</a></h2>
+<p>异常最显而易见的实现方式是维护一个 handler 的栈单链表。当控制进入了保护块，这个块的 handler 加入到链表头。当异常发生，或者调用 raise 或者 throw 语句，语言的运行时系统推出链表的第一个 handler，调用。handler 开始检查是不是匹配异常，如果没有简单的 reraise</p>
+<p>为了实现在动态链上的传播，每个 subroutine 有一个隐式的 handler 执行 subroutine epilogue 代码的工作，然后重新抛出异常。</p>
+<p>如果保护块代码有几种不同异常的 handler，就被实现为包含 if 语句的单个 handler。</p>
+<p>这种实现的问题就是提升了运行时开销。每个被保护块和每个 subroutine 开始的代码都要推 handler 到 handler 列表，结束代码推出列表。我们通常可以做得更好。</p>
+<p>handler 列表的真实目的是要决定哪个 handler 要激活。因为源码块倾向于翻译为机器语言指令的连续块，我们可以在编译器表驱动的形式捕获 handler 和受保护块的关联。表中每项包含两个字短：代码块开始的地址和关联 handler 的地址。表以第一个字短排序。当异常发生，语言的运行时系统在表中执行二分搜索，使用 PC 作为 key，发现当前块的 handler。如果 handler 重新抛出异常，处理重复：handler 本身也是代码块，可以在表中被查找。在与 subroutine 中与传播相关的隐式 handler 情况下，出现的唯一微妙之处为：这样的 handler 必须必须确保重新抛出代码使用 subroutine 的返回地址，而不是当前的 PC，作为表查询的 key。</p>
+<p>抛出异常的开销在这第二种实现中更高，与全部 handler 数量的 log 相关。但是开销只有在异常发生时才有。假定异常是不同寻常的事件，对性能的影响显然是有益的：在通常情况下开销是零。表驱动方法的形式要求编译器可以访问整个程序，或者链接器提供粘合子表的机制。如果代码片段分开编译，我们可以利用混合方法，编译器为每个 subroutine 创建单独的表，每个 stack frame 包含了对应表的指针。</p>
+<h3 id="exception-handling-without-excepitions"><a class="header" href="#exception-handling-without-excepitions">Exception Handling without Excepitions</a></h3>
+<p>值得注意的是，有时可以用不提供内建的语言模拟异常。在 6.2 我们注意到 Pascal 允许 goto 跳转到 subroutine 之外的标签。</p>
+<p>一些 setjmp 和 longjmp 的叙述。C 提供了 <code>volatile</code> 关键字，这种变量的修改会马上回写内存，每次读都从内存读。C 通过 setjmp 和 longjmp 实现的异常如果被保护代码修改的值需要被 handler 看到，需要使用 <code>volatile</code> 关键字修饰。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>有了运行时栈的布局理解，我们可以考虑更加通用的控制抽象--coroutines。就像 consinuation, coroutine 也通过 closure 表征（代码地址，和关联的环境），我们可以通过 nonlocal goto 跳转，这种情况下，有一个特殊的操作 transfer。两个概念的主要不同点是: continuation 是常量，一旦创建不变，coroutine 每次运行都会改变。当 goto 到一个 continuation， 老的程序计数器被丢弃，除非我们显式创建一个新的 continuation 来持有。当使用 tranfer 从一个 coroutine 到另一个，我们老的程序计数器还是被存储着：我们离开的 coroutine 更新反映这个事实。因此，我们在同样的 continuation 多次执行 goto，每个 jump 都开始于同样的位置，但是如果在同样的 coroutine 执行 transfer 多次，每个 jump 从离开的位置执行。</p>
 <p>实际上，coroutine 就是并发的执行上下文，但是同时只会执行一个，通过名字显式转移控制。coroutine 可以用来实现 iterator 和 thread。也有自己的用途，尤其是对于服务端和离散的事件模拟。历史上，线程出现可以追溯到 Algol 68。今天的 Ada，Java，C#，C++，Python，Ruby，Haskell，Go，Scala 等都有线程。几乎都在语言之外通过库提供。coroutine 不像用户层面的编程抽象。历史上，两个重要的语言提供了这种能力 Simula Modula-2。我们后面集中讨论的实现。以及 iterator 的应用和离散事件模拟。</p>
 <p>一个简单的 coroutine 可能比较有用的例子，想象我们写一个屏保程序，大部分在屏幕上显示黑色，但是要保持图片移动，避免局部烧屏。想象我们的屏幕保护在后台对文件系统执行全局检查，寻找损坏文件，逻辑类似这样：</p>
 <pre><code class="language-c">loop 

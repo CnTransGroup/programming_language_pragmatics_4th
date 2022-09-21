@@ -1013,7 +1013,75 @@ int_sort(my_array);
 </code></pre>
 <p>深赋值相对罕见。主要用于分布式计算，尤其是 RPC 系统的参数传递中。</p>
 <p>对于用户定义的抽象，没有单独的语言规范机制来规范相等测试或者赋值操作。通常允许程序员自定义这两种操作。</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>I/O 能力允许程序与外部世界通信。在讨论这种通信时，需要区分交互式 I/O 和文件 I/O。交互式 I/O 通常表示与用户或者物理设备通信，与运行的程序是 parallel 的，程序的输入取决于之前程序的输出。文件通常表示操作系统实现的离线存储。文件更进一步划分为临时文件和持久性文件。临时文件只存在于程序运行期间；目的是存储大于内存的程序信息。持久文件允许在程序运行开始读取，程序写入之后程序结束后继续存在。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>第 7 章介绍了类型的概念，是计算机程序中一种组织数据的方式。还介绍了内建类型和复合类型。复合类型是通过类型构造器组合简单类型而来。</p>
+<p>本章我们调查最重要的复合类型：records，arrays，strings，sets，pointers，lists，files。record 小节还考虑 variants 和 tuples。指针的小节，更详细的讨论变量的值模型和引用模型，以及堆管理问题。文件的小节（更多的在在线网站）包含了输入输出的机制。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>record 类型允许异构类型的相关数据在一起存储操作。最开始由 Cobol 引入，也出现在 Algol 68，称为 structure，并引入关键字 struct。很多现代语言包括 C 以及继承者利用了 Algol 的术语。</p>
+<h2 id="811-syntax-and-operations"><a class="header" href="#811-syntax-and-operations">8.1.1 Syntax and Operations</a></h2>
+<p>C，每个组件称为 field（字段），大多数语言使用 . 号访问字段:</p>
+<pre><code class="language-c">struct element {
+  char name[2];
+  int atomic_number;
+  double atomic_weight;
+  _Bool metallic;
+};
+</code></pre>
+<p>大多数语言也支持嵌套，还是用 C</p>
+<pre><code class="language-c">struct ore {
+  char name[30];
+  struct {
+    char name[2];
+    int atomic_number;
+    double atomic_weight;
+    _Bool metallic;
+  } element_yielded;
+};
+// or 
+struct ore {
+  char name[30];
+  struct element element_yielded;
+}
+</code></pre>
+<h2 id="812-memory-layout-and-its-impact"><a class="header" href="#812-memory-layout-and-its-impact">8.1.2 Memory Layout and Its Impact</a></h2>
+<p>Record 的 field 通常存储在相邻的内存。symbol 表中，编译器追踪每个 field 的偏移。</p>
+<p><img src="assets/8.1.records_structures/image-20220921111639805.png" alt="image-20220921111639805" /></p>
+<p>32 位机器上的 element 类型如上图。因为 name 字段只有两个字节长。aotmic_number 是个整数，需要字长对齐，所以 name 和 atomic_number 中间有两个字节的“洞”。类似的布尔类型只占用一个比特，也就是一个字节，剩下三个字节的“洞”。所以 element 一个实例需要占用 20 个字节。</p>
+<p>值模型的语言中，嵌套 record 通常嵌入到父 record，其中充当带有单字长或者双字长对齐的大字段。在引用模型的语言中，record 类型的字段引用其他位置的数据。主要不同不仅是内存布局上，语义上也很有不同。</p>
+<p><img src="assets/8.1.records_structures/image-20220921140108563.png" alt="image-20220921140108563" /></p>
+<p>如图，C 中采用值模型，Java 采用引用模型。</p>
+<p>有些语言和实现允许程序员指定 record 类型 packed。在 Ada 中，可以使用 pragma</p>
+<pre><code class="language-ada">type element = record
+...
+end;
+pragma Pack(element);
+</code></pre>
+<p>或者在 C gcc 中使用 attribute</p>
+<pre><code class="language-c">struct __attribute__ ((__packed__)) element {
+  
+}
+</code></pre>
+<p>Ada 是语言内建的，C 的是 gcc 的编译器扩展。无论哪种情况，该指令都要求编译器优化空间而不是速度。通常编译器通过消除“洞”实现 packed record，就是“简单的将字段堆在一起”。为了访问没有对齐的 field，需要使用多指令从内存恢复字段放到寄存器。packed 的 element record 如下图，只使用 15 字节。但是 packed element 数组每个元素要占用 16 字节，因为元素之间要对齐。</p>
+<p><img src="assets/8.1.records_structures/image-20220921140724816.png" alt="image-20220921140724816" /></p>
+<p>对于小的 record，拷贝和比较可以逐字段进行。更大的 record，我们可以使用库函数节省代码空间。比如 <code>block_copy</code> routine 可以输入源地址，目标地址和长度作为参数，但是 <code>block_compare</code> routine 在“洞”数据不同时会失败。一个解决方案是将所有“洞”数据置为零，但是这样要求 elaboration 点都需要代码。另一个是让编译器为每个 record 生成自定义的逐字段比较的操作。</p>
+<p>除了复杂的比较，record 中的洞还浪费空间。pack 消除了洞，但是增加了访问耗时。有些编译器会折中处理，根据长度与字长约束重新排布 record 的字段。字节对齐的字段在前，然后是一半字长的字段，全字长字段，以及双字长的字段。element 重排之后如下图</p>
+<p><img src="assets/8.1.records_structures/image-20220921141526957.png" alt="image-20220921141526957" /></p>
+<p>大多数时候，重排是一个实现问题：语法不受影响，所有的 record 类型实例使用同样的方法重排。系统编程中存在例外，有时会查看数据类型的实现，要求以特殊的方式映射到内存。比如，内核开发者，需要特定的布局策略定义 record 以访问特殊设备的控制寄存器。C 和 C++ 很大一部分是用来设计为系统编程，保证了 struct 的字段以声明好的方式分配。Fortran 90 允许程序员指定不重排字段；不指定就交给编译器自己选择是否重排。为了适应系统编程，C/C++，Ada 允许程序员指定字段占据多少比特。</p>
+<h2 id="813-variant-recordsunions"><a class="header" href="#813-variant-recordsunions">8.1.3 Variant Records（Unions）</a></h2>
+<p>C 中</p>
+<pre><code class="language-c">union {
+  int i;
+  double d;
+  _Bool b;
+};
+</code></pre>
+<p>union 的尺寸是最大元素的大小。</p>
+<p>实际上，union 主要有两个目的。第一个是系统编程中，union 允许同样的字节集合在不同时间以不同方式翻译。官方例子出现在内存管理，存储有时候是未分配空间，有时候是 bookkeepting 信息，有时是用户定义类型。虽然可以使用 nonconverting type cast 来做，但是 union 能更好的表明程序员意图：没有重新解释这些位，而是用于独立目的。</p>
+<p>第二个是union 的历史目的用来表示 record 中的可代替字段的集合。比如一个员工表示的 record，会有一些公共字段（name, addres, phone, department, ID number）和依赖于这个人薪酬，每小时还是咨询等的其他字段。传统 C union 用于此目的是是丑陋的。更清晰的语法是 Pascal 的 variant records 以及继承者，允许程序员指定 record 的那些字段在内存中应该重叠。C11 和 C++11 也加入了这个形式的 anonymous union。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>有些语言中，string 只是字符的数组。有些语言，string 有一些特殊状态，可以使用数组没有的操作。像 Perl，Python，Ruby 的脚本语言有一些内建的对于 string 的操作符和函数，包括灵活的模式匹配。本小节集中于传统语言中的 string 角色。</p>
+<p>几乎所有编程语言允许字面量 string，作为字符的序列，通常使用单引号或者双引号括起来。大多数语言区分字符字面量（通常使用单引号）字符转字面量（通常使用双引号）。大多数语言也提供了转义序列。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>编程语言中的 set 是任意数量相同类型不同值的未排序集合。Pascal 引入，并被很多语言继承。set 的元素类型被称为 base / universe 类型。Pascal 要求元素必须是离散 base 类型，提供了 union，intersection，和 difference 操作。【译者注：这个 set 几乎等于数学上集合的定义】直觉的实现就是比特数组，第 k 个位置比特为1表示 base type 的第 k 个元素存在在集合中，所以，union 就是位或，intersection 就是位与，difference 就是与非。</p>
+<p>不幸的是，比特数组对于比如整数无法很好的工作，在 32 位的机器上需要 500 megabytes。由于这个问题，有些语言限制集合 base 类型的值的数量。</p>
+<p>对于从大的 universe 中元素集合，现在语言使用另一种实现，大小与存在的元素成正比，而不是全部 base 类型的值。大多数语言也提供了迭代器访问集合的元素。这里划分了两种，有序和无序，有序的按序迭代，通常使用跳表或者排序树实现，无序的，通常使用 hash 表实现。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>I/O 能力允许程序与外部世界通信。在讨论这种通信时，需要区分交互式 I/O 和文件 I/O。交互式 I/O 通常表示与用户或者物理设备通信，与运行的程序是 parallel 的，程序的输入取决于之前程序的输出。文件通常表示操作系统实现的离线存储。文件更进一步划分为临时文件和持久性文件。临时文件只存在于程序运行期间；目的是存储大于内存的程序信息。持久文件允许在程序运行开始读取，程序写入之后程序结束后继续存在。</p>
 <p>I/O 是编程语言设计里最难的方面之一，以及语言之间共同点最小的部分。有些语言提供内建的 file 类型，以及 I/O 的特定语法结构。有些都实现在库中，暴露出 file 类型和一些子历程。集成到语言的主要优势在于不需要子历程调用语法，不需要调用库。纯库实现的 I/O，可能会让语言定义“混乱”。</p>
 <div style="break-before: page; page-break-before: always;"></div><p>在第 3 章介绍中，我们定义了过程的抽象通过程序员可以绑定一个名字与一段复杂的程序片段，然后可以根据其功能来思考而不是实现。有时候要区分控制抽象，主要目的是抽象一些行为；数据抽象，主要是抽象信息的表示。我们在 10 章讨论数据抽象。</p>
 <p>subroutine是大多数编程语言控制抽象的主要机制。执行subroutine的是 caller，等待subroutine执行完毕然后再继续。大多数subroutine是有参数的：caller 传递参数来影响subroutine的行为，或者提供数据以供操作。arguments 也被称为 actual parameter。需要与subroutine的 formal parameters 一一对应。返回值的subroutine通常称为 function。不反回值的subroutine称为 procedure。静态类型语言要求声明subroutine，编译器从而可以验证调用subroutine的正确性。</p>

@@ -851,11 +851,11 @@ f := c; (* this should probably be an error *)
 <ol>
 <li>类型在结构上是相同的，但是语言采用名字相同。这种情况下类型之间的底层表示相同，因此转换基本不需要计算，运行时没有开销。</li>
 <li>类型有不同集合的值，但是交叉的值使用相同方式表示。类型转换时，运行时必须检查值是否对另一个类型有效，如果检查失败，就抛出错误，检查成功也没有其他开销。有些语言实现允许关闭检查，运行更快但是会出现不安全代码。</li>
-<li>类型低层布局不同，但是我们仍然可以定义一些对应关系。比如 32 位整数，可以转换为 IEEE 浮点数的双精度表示。大多数处理器提供了机器码执行这种转换。浮点数也可以 rounding 或者 truncating 转换为整数，但是精度会有所损失，对于很多指数值，转换会溢出。同样很多处理器提供了机器码。</li>
+<li>类型底层布局不同，但是我们仍然可以定义一些对应关系。比如 32 位整数，可以转换为 IEEE 浮点数的双精度表示。大多数处理器提供了机器码执行这种转换。浮点数也可以 rounding 或者 truncating 转换为整数，但是精度会有所损失，对于很多指数值，转换会溢出。同样很多处理器提供了机器码。</li>
 </ol>
 <h3 id="nonconverting-type-casts"><a class="header" href="#nonconverting-type-casts">Nonconverting Type Casts</a></h3>
 <p>有时候，尤其是系统编程中，需要在不改变下层实现的时候改变值的类型；换句话说，将一种类型的值的比特解释为另一种类型。一个常见的例子出现在内存分配算法中，使用很大的数组字节表示堆，然后将数组的一部分重新解释为整数，指针，或者用户定义的数据结构。另一个常见的例子出现在高性能数学软件中，可能会将浮点数解释为整数或者 record，指数，有效位数和符号字段。这些字段可以用来实现特定的算法。</p>
-<p>类型的改变不会修改低层比特的布局称为 nonconverting type cast, 有时候也称为 type pun.</p>
+<p>类型的改变不会修改底层比特的布局称为 nonconverting type cast, 有时候也称为 type pun.</p>
 <p>C++ 继承了 C 的转换机制，但是也提供了语义更清晰的转换代替选择。<code>static_cast</code> 执行 type conversion， <code>reinterpret_cast</code>执行 nonconverting type cast，<code>dynamic_cast</code>允许程序操作多态类型的指针赋值执行运行期检查，而 <code>static_cast</code>没有检查。还有一个<code>const_cast</code>用来移除只读标志符。</p>
 <p>任何 nonconverting 的转换在类型系统中都是危险行为。弱类型系统中，这种转换可能难以找到。强类型系统语言中，显式转换至少表明了代码的危险部分，如果出现问题方便 debug。</p>
 <h2 id="722-type-compatibility"><a class="header" href="#722-type-compatibility">7.2.2 Type Compatibility</a></h2>

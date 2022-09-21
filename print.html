@@ -1081,7 +1081,10 @@ pragma Pack(element);
 <div style="break-before: page; page-break-before: always;"></div><p>编程语言中的 set 是任意数量相同类型不同值的未排序集合。Pascal 引入，并被很多语言继承。set 的元素类型被称为 base / universe 类型。Pascal 要求元素必须是离散 base 类型，提供了 union，intersection，和 difference 操作。【译者注：这个 set 几乎等于数学上集合的定义】直觉的实现就是比特数组，第 k 个位置比特为1表示 base type 的第 k 个元素存在在集合中，所以，union 就是位或，intersection 就是位与，difference 就是与非。</p>
 <p>不幸的是，比特数组对于比如整数无法很好的工作，在 32 位的机器上需要 500 megabytes。由于这个问题，有些语言限制集合 base 类型的值的数量。</p>
 <p>对于从大的 universe 中元素集合，现在语言使用另一种实现，大小与存在的元素成正比，而不是全部 base 类型的值。大多数语言也提供了迭代器访问集合的元素。这里划分了两种，有序和无序，有序的按序迭代，通常使用跳表或者排序树实现，无序的，通常使用 hash 表实现。</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>I/O 能力允许程序与外部世界通信。在讨论这种通信时，需要区分交互式 I/O 和文件 I/O。交互式 I/O 通常表示与用户或者物理设备通信，与运行的程序是 parallel 的，程序的输入取决于之前程序的输出。文件通常表示操作系统实现的离线存储。文件更进一步划分为临时文件和持久性文件。临时文件只存在于程序运行期间；目的是存储大于内存的程序信息。持久文件允许在程序运行开始读取，程序写入之后程序结束后继续存在。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>list 是递归定义的。完美适合函数式或者 logic 语言。</p>
+<p>也可以在命令式语言中使用。有些提供了内建类型。在面向对象语言中通常使用库提供类支持，程序员也可以使用指针和 record 自己构建。因为很多标准 list 操作会产生垃圾，list 一般在有自动垃圾收集的语言中工作的最好。</p>
+<p>【译者注：Rust <a href="https://rust-unofficial.github.io/too-many-lists/">too many list</a>是很好的材料】</p>
+<div style="break-before: page; page-break-before: always;"></div><p>I/O 能力允许程序与外部世界通信。在讨论这种通信时，需要区分交互式 I/O 和文件 I/O。交互式 I/O 通常表示与用户或者物理设备通信，与运行的程序是 parallel 的，程序的输入取决于之前程序的输出。文件通常表示操作系统实现的离线存储。文件更进一步划分为临时文件和持久性文件。临时文件只存在于程序运行期间；目的是存储大于内存的程序信息。持久文件允许在程序运行开始读取，程序写入之后程序结束后继续存在。</p>
 <p>I/O 是编程语言设计里最难的方面之一，以及语言之间共同点最小的部分。有些语言提供内建的 file 类型，以及 I/O 的特定语法结构。有些都实现在库中，暴露出 file 类型和一些子历程。集成到语言的主要优势在于不需要子历程调用语法，不需要调用库。纯库实现的 I/O，可能会让语言定义“混乱”。</p>
 <div style="break-before: page; page-break-before: always;"></div><p>在第 3 章介绍中，我们定义了过程的抽象通过程序员可以绑定一个名字与一段复杂的程序片段，然后可以根据其功能来思考而不是实现。有时候要区分控制抽象，主要目的是抽象一些行为；数据抽象，主要是抽象信息的表示。我们在 10 章讨论数据抽象。</p>
 <p>subroutine是大多数编程语言控制抽象的主要机制。执行subroutine的是 caller，等待subroutine执行完毕然后再继续。大多数subroutine是有参数的：caller 传递参数来影响subroutine的行为，或者提供数据以供操作。arguments 也被称为 actual parameter。需要与subroutine的 formal parameters 一一对应。返回值的subroutine通常称为 function。不反回值的subroutine称为 procedure。静态类型语言要求声明subroutine，编译器从而可以验证调用subroutine的正确性。</p>

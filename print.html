@@ -1833,7 +1833,15 @@ public static int foo(int n) {
 <div style="break-before: page; page-break-before: always;"></div><p>如同 1.6 中所述，编译的阶段通常划分为前端分析源代码，后端负责目标代码的综合，通常还有一个中间端负责语言和机器无关的代码优化。2，4章讨论了前端的工作，最终构建语法树。本章转向后端的工作，特别是代码生成，汇编和链接。我们在 17 章继续代码优化。</p>
 <p>在 6 - 10 章，我们通常讨论编译器生成的代码实现多种语言特性。现在我们要研究编译器如何从语法树生成代码，以及如何将多个编译产物组合成一个可执行程序。在 15.1 更详细讨论程序综合。我们特别关注将该工作氛围不同阶段的几种合理方式。15.2 我们考虑很多种不同的 IR 形式。在网站上，我们提供了两个具体示例--GNU 编译器使用的 GIMPLE 和 RTL 格式。我们将在 16 章研究两种其他的 IR 形式：Java bytecode 和 微软使用的 Common Intermediate Lanuage(CIL) 以及其他实现。</p>
 <p>在 15.3 中我们研究从抽象语法树汇编代码的生成，使用属性语法作为形式化框架。在 15.4 我们讨论二进制目标文件的内部构造，以及程序在内存中的布局。15.5 描述汇编。15.6 考虑链接。</p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>汇编器，链接器，以及加载程序通常以一对相关的文件格式操作：relocatable object 代码和 executable object 代码。可重定位目标代码是链接器的输入；这种格式的多个文件组合称为一个可执行程序。可执行目标代码是加载程序的输入：加载到内存然后运行。可重定位目标文件包括下面的信息：</p>
+<div style="break-before: page; page-break-before: always;"></div><p>正如我们在第 4 章提到，相对于前端，后端通用的结构更少。即使类似文本处理器，源代码转换，VLSI 布局工具这些编译器也必须有 scan，parse，以及分析语义能力。但是后端，即使同一种语言对于同一种机器也有很多不同的内部结构</p>
+<p>我们 15.2 中会看到，不同的编译器使用不同的中间表示来表征程序。它们可能在执行代码优化时使用不同形式。简单的编译器或者以编译速度而不是执行速度的为目标的编译器（比如 JIT）可能根本没有什么改进。JIT 或者“load-and-go“编译器可能不需要单独的 linker。有些编译器，大部分或者全部代码生成器可能是使用工具自动生成，该工具将目标计算机的形式化描述作为输入。</p>
+<h2 id="1511-a-plausible-set-of-phases"><a class="header" href="#1511-a-plausible-set-of-phases">15.1.1 A Plausible Set of Phases</a></h2>
+<p><img src="assets/15.1.back_end_compiler_structure/image-20220920175735550.png" alt="image-20220920175735550" /></p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>15.1 中的后端结构如此复杂以至于在单独的一章中很难详细描述。为了限制我们讨论的范围，本章我们只讨论生成正确但是简陋的代码。这个选择可以使我们考虑简单点的中端和后端。丢弃机器无关的代码优化部分，然后将中间和目标代码生成合并成一个阶段。</p>
+<p><img src="assets/15.3.code_generation/image-20220920180056084.png" alt="image-20220920180056084" /></p>
+<p>如上图，最后生成汇编语言；因为不进行代码优化改变程序控制结构，所以也就不需要显式表征控制流图。我们也只讨论简单的寄存器分配算法，忽略虚拟寄存器的需要。最后，丢弃指令调度。</p>
+<h2 id="1531-an-attribute-grammar-example"><a class="header" href="#1531-an-attribute-grammar-example">15.3.1 An Attribute Grammar Example</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><p>汇编器，链接器，以及加载程序通常以一对相关的文件格式操作：relocatable object 代码和 executable object 代码。可重定位目标代码是链接器的输入；这种格式的多个文件组合称为一个可执行程序。可执行目标代码是加载程序的输入：加载到内存然后运行。可重定位目标文件包括下面的信息：</p>
 <ul>
 <li>Import table：标识命名的位置但是地址未知，不过假定其他文件可以链接到</li>
 <li>Relocation table：标识当前文件的位置，但是必须可以在链接时被修改以反映最终的当前文件（可执行程序）的偏移</li>
@@ -1853,7 +1861,8 @@ public static int foo(int n) {
 </ul>
 <p>这些 segment 的布局如下图，是现代 32 位 Linux 系统的排列。对于其他机器或者操作系统可能是不同的。</p>
 <p><img src="assets/15.4.address_space_organization/image-20220920094654034.png" alt="image-20220920094654034" /></p>
-<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>高级编程语言的每个非平凡实现通过库进行扩展。有些库的 routinues 很简单：复制内存内容，执行不被硬件支持的算术计算。有些更加复杂，比如，堆管理 routines，用于缓冲或者图形 I/O 的库需要管理大量的内部状态。</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><p>在多用户系统，一个程序的多个实例同时运行很常见。每个程序的运行实例都拷贝单独的代码段很浪费。因此很多操作系统追踪程序的运行，建立起映射表，所有相同程序的运行实例共享同一份只读的代码段。每个实例维护自己的数据段。</p>
+<div style="break-before: page; page-break-before: always;"></div><p>高级编程语言的每个非平凡实现通过库进行扩展。有些库的 routinues 很简单：复制内存内容，执行不被硬件支持的算术计算。有些更加复杂，比如，堆管理 routines，用于缓冲或者图形 I/O 的库需要管理大量的内部状态。</p>
 <p>通常来说，我们使用术语 runtime-system，有时候只使用 runtime，来表示语言实现依赖的库集。有些 runtime 的部分，比如堆管理，建立所有 subroutine 参数的信息，可以被轻松替换。但是其他部分要求对 compiler 或者生成程序有很好的了解。简单情况下，这些知识只是一组 compiler 和 runtime 需要共同遵循的惯例（比如，subroutine 调用顺序）。更复杂的是，compiler 生成程序的 metadata，runtime 必须根据这些来完成自己的工作。比如，跟踪垃圾收集（8.5.3），以来 metadata 来识别程序中的 root pointer（所有全局，静态，和栈指针以及变量引用），以及每个引用的类型和每个分配块。</p>
 <p>在前几章已经讨论了 compiler/runtime 集成的例子；我们在 16.1 中回顾一下。列表的长度和复杂性通常意味着 compiler 和 runtime 必须共同开发。</p>
 <p>有些语言（显然比如 C）有非常小的 runtime 系统：执行源代码所需的大多数用户级别代码要么由 compiler 直接生成，要么包含在语言独立的库中。有些严重依赖 runtime 系统的语言，比如 C# 依赖 Common Language Infrasturcture(CLI) 标准定义的运行时。</p>
